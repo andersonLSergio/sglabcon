@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/template.xhtml">
+
+	<ui:define name="titulo">
+		<title>SGLabCon | Minha Conta</title>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="formMinhaConta">
+			<p:fieldset id="fieldset1" legend="Detalhes do Usuário">
+				<p:panelGrid columns="2">
+
+					<h:outputLabel value="Nome Completo"></h:outputLabel>
+					<h:outputText value="#{usuarioBean.usuario.nomeCompleto}" />
+					<h:outputLabel value="Usuário"></h:outputLabel>
+					<h:outputText value="#{usuarioBean.usuario.username}">
+					</h:outputText>
+					<h:outputLabel value="E-mail"></h:outputLabel>
+					<h:outputText value="#{usuarioBean.usuario.email}">
+					</h:outputText>
+					<h:outputLabel value="Nível de Acesso"></h:outputLabel>
+					<h:outputText value="#{usuarioBean.usuario.papelFormatado}">
+					</h:outputText>
+
+				</p:panelGrid>
+				<p:panelGrid columns="2">
+					<p:commandButton value="Alterar Senha" icon="ui-icon-key"
+						title="Alterar Senha"
+						oncomplete="PF('dialogoAlterarSenha').show();"
+						update=":idDialogoAlterarSenha :formAlterarSenha:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+				</p:panelGrid>
+			</p:fieldset>
+
+
+		</h:form>
+
+		<p:dialog id="idDialogoAlterarSenha"
+			header="Alterar Senha - #{usuarioBean.usuario.nomeCompleto}"
+			widgetVar="dialogoAlterarSenha" draggable="false" resizable="false"
+			modal="true" closable="false">
+			<h:form id="formAlterarSenha">
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel for="usuario" value="Usuário:" />
+					<h:outputText id="usuario" value="#{usuarioBean.usuario.username}" />
+
+					<p:outputLabel for="senha" value="Nova Senha" />
+					<p:password id="senha"
+						value="#{usuarioBean.usuario.senhaSemCriptografia}"
+						match="senhaConfirmacao"
+						validatorMessage="As senhas não coincidem" feedback="true"
+						promptLabel="Digite sua senha" weakLabel="muito fraca"
+						goodLabel="considerável" strongLabel="forte" required="true"
+						requiredMessage="O campo 'Nova Senha' é obrigatório" />
+
+					<p:outputLabel for="senhaConfirmacao" value="Confirmar Nova Senha" />
+					<p:password id="senhaConfirmacao"
+						value="#{usuarioBean.usuario.senhaConfirmacao}" feedback="true"
+						promptLabel="Digite sua senha" weakLabel="muito fraca"
+						goodLabel="considerável" strongLabel="forte" required="true"
+						requiredMessage="O campo 'Confirmar Nova Senha' é obrigatório" />
+				</h:panelGrid>
+				<p:panelGrid columns="2">
+					<p:commandButton value="Confirmar"
+						actionListener="#{usuarioBean.alterarSenha()}"
+						update=":mensagem :formAlterarSenha:painel" />
+					<p:commandButton value="Fechar"
+						oncomplete="PF('dialogoAlterarSenha').hide();" />
+				</p:panelGrid>
+			</h:form>
+
+
+		</p:dialog>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/template.xhtml">
+
+	<ui:define name="titulo">
+		<title>SGLabCon | Principal</title>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<div class="divPrincipal">
+			<h:form id="formPrincipal">
+
+
+				<p:panelGrid columns="4" styleClass="panelGridPrincipal"
+					layout="grid">
+
+					<h:outputLink value="">
+						<h:graphicImage library="img" name="cpcilindrico.png"
+							styleClass="imgCilindrico" alt="CP Cilindrico"
+							title="Ensaio de CPs Cilíndricos" />
+					</h:outputLink>
+					<h:outputLink value="ensaiosBConcreto.xhtml">
+						<h:graphicImage library="img" name="bconcreto.png"
+							styleClass="imgCilindrico" alt="Bloco de Concreto"
+							title="Ensaio de Blocos de Concreto" />
+					</h:outputLink>
+					<h:outputLink value="ensaiosPaver.xhtml">
+						<h:graphicImage library="img" name="paver.png"
+							styleClass="imgCilindrico" alt="Pavers" title="Ensaio de Pavers" />
+					</h:outputLink>
+					<h:outputLink value="clientes.xhtml"
+						rendered="#{autenticacaoBean.temPermissoes(['A'])}">
+						<h:graphicImage library="img" name="customers.png"
+							styleClass="imgCilindrico" alt="Clientes"
+							title="Gerenciador de Clientes" />
+					</h:outputLink>
+					<h:outputLink value="usuarios.xhtml"
+						rendered="#{autenticacaoBean.temPermissoes(['A'])}">
+						<h:graphicImage library="img" name="users.png"
+							styleClass="imgCilindrico" alt="Gerenciador de Usuarios"
+							title="Gerenciador de Usuários" />
+					</h:outputLink>
+					<h:outputLink value="parametros.xhtml"
+						rendered="#{autenticacaoBean.temPermissoes(['A'])}">
+						<h:graphicImage library="img" name="gear.png"
+							styleClass="imgCilindrico" alt="Parametros do Sistema"
+							title="Parâmetros do Sistema" />
+					</h:outputLink>
+				</p:panelGrid>
+
+
+
+			</h:form>
+		</div>
+	</ui:define>
+</ui:composition>

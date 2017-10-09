@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/template.xhtml">
+
+	<ui:define name="titulo">
+		<title>SGLabCon | Laboratório</title>
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<h:form id="formListagem">
+			<p:panel header="Ensaios Paver - Listagem">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" rows="5" paginatorPosition="bottom"
+					value="#{ensaioPaverBean.ensaios}" var="ensaio">
+
+					<f:facet name="header">
+						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+							actionListener="#{ensaioPaverBean.novo()}"
+							update=":formCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+
+					<p:column headerText="Código" sortBy="#{ensaio.codigo}"
+						filterBy="#{ensaio.codigo}">
+						<div align="center">
+							<h:outputText value="#{ensaio.codigo}" />
+						</div>
+					</p:column>
+
+					<p:column headerText="Lote" sortBy="#{ensaio.lote}"
+						filterBy="#{ensaio.lote}" filterMatchMode="contains">
+						<div align="center">
+							<h:outputText value="#{ensaio.lote}" />
+						</div>
+					</p:column>
+
+					<p:column headerText="Data de Fabricação"
+						sortBy="#{ensaio.dataFabricacao}"
+						filterBy="#{ensaio.dataFabricacao}">
+						<div align="center">
+							<h:outputText value="#{ensaio.dataFabricacao}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+							</h:outputText>
+						</div>
+					</p:column>
+
+					<p:column headerText="Qtd. de Amostras"
+						sortBy="#{ensaio.qtdAmostras}" filterBy="#{ensaio.qtdAmostras}">
+						<div align="center">
+							<h:outputText value="#{ensaio.qtdAmostras}" />
+						</div>
+					</p:column>
+
+					<p:column headerText="Tipo de Peca" sortBy="#{ensaio.tipoPeca}"
+						filterBy="#{ensaio.tipoPeca}" filterMatchMode="contains">
+						<div align="center">
+							<h:outputText value="#{ensaio.tipoPeca}" />
+						</div>
+					</p:column>
+
+					<p:column headerText="Máquina" sortBy="#{ensaio.tipoMaquina}"
+						filterBy="#{ensaio.tipoMaquina}" filterMatchMode="contains">
+						<div align="center">
+							<h:outputText value="#{ensaio.tipoMaquina}" />
+						</div>
+					</p:column>
+
+					<p:column headerText="Cliente"
+						sortBy="#{ensaio.cliente.nomeFantasia}"
+						filterBy="#{ensaio.cliente.nomeFantasia}"
+						filterMatchMode="contains">
+						<div align="center">
+							<h:outputText value="#{ensaio.cliente.nomeFantasia}" />
+						</div>
+					</p:column>
+					
+					<p:column headerText="Opções" style="width:120px;">
+						<div align="center">
+							<p:commandButton value="Detalhes" icon="ui-icon-search"
+								actionListener="#{ensaioPaverBean.abrirDetalhes(ensaio)}" />
+						</div>
+					</p:column>
+
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+
+		<p:dialog header="Novo Ensaio - Paver" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" closable="false"
+			position="center" positionType="absolute">
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" class="novoEnsaio" columns="2">
+					<h:outputLabel for="usuario" value="Laboratorista:" />
+					<h:outputText id="usuario"
+						value="#{autenticacaoBean.usuarioLogado.nomeCompleto}" />
+
+					<p:outputLabel for="lote" value="Lote:" />
+					<p:inputText id="lote" maxlength="50" size="30"
+						value="#{ensaioPaverBean.ensaioPaver.lote}" />
+
+					<p:outputLabel for="data" value="Data de Fabricação:" />
+					<p:calendar id="data" pattern="dd/MM/yyyy HH:mm:ss" locale="pt_BR"
+						value="#{ensaioPaverBean.ensaioPaver.dataFabricacao}"
+						required="true"
+						requiredMessage="O campo 'Data de Fábricação' é obrigatório">
+						<p:ajax listener="#{ensaioPaverBean.calcularData()}"
+							update=":formCadastro:idade" />
+					</p:calendar>
+
+					<p:outputLabel for="maquina" value="Classe da Máquina:" />
+					<p:inputText id="maquina" maxlength="15" size="30"
+						value="#{ensaioPaverBean.ensaioPaver.tipoMaquina}"
+						required="true"
+						requiredMessage="O campo 'Classe da Máquina' é obrigatório" />
+
+					<h:outputLabel for="qtd" value="Qtd. de Amostras: *"></h:outputLabel>
+					<p:spinner id="qtd" required="true"
+						requiredMessage="O campo 'Qtd. de Amostras' é obrigatório"
+						converterMessage="O valor informado no campo 'Qtd de Amostras' é inválido"
+						value="#{ensaioPaverBean.ensaioPaver.qtdAmostras}" min="0" />
+
+					<p:outputLabel for="tipoPeca" value="Tipo da Peça:" />
+					<p:inputText id="tipoPeca" maxlength="25" size="30"
+						value="#{ensaioPaverBean.ensaioPaver.tipoPeca}" required="true"
+						requiredMessage="O campo 'Tipo da Peça' é obrigatório" />
+
+					<h:outputLabel for="resistenciaC"
+						value="Resistência Característica (MPa): *" />
+					<p:inputNumber id="resistenciaC"
+						value="#{ensaioPaverBean.ensaioPaver.resistenciaCaracteristica}"
+						decimalSeparator="," thousandSeparator="." required="true"
+						requiredMessage="O campo 'Resistência Característica' é obrigatório" />
+
+					<h:outputLabel for="fator" value="Fator 'p': *" />
+					<p:inputNumber id="fator"
+						value="#{ensaioPaverBean.ensaioPaver.fatorCorrecao}"
+						decimalSeparator="," thousandSeparator="." required="true"
+						requiredMessage="O campo 'Fator de Correção' é obrigatório" />
+
+					<h:outputLabel for="idade" value="Idade (dias):" />
+					<h:outputText id="idade"
+						value="#{ensaioPaverBean.ensaioPaver.idade}" />
+
+					<h:outputLabel for="aCarregamento"
+						value="Área de Carregamento (mm²): *" />
+					<p:inputNumber id="aCarregamento"
+						value="#{ensaioPaverBean.ensaioPaver.areaCarregamento}"
+						decimalSeparator="," thousandSeparator="." required="true"
+						requiredMessage="O campo 'Área de Carregamento' é obrigatório" />
+
+					<p:outputLabel for="cliente" value="Cliente:" />
+					<p:selectOneMenu id="cliente" filter="true"
+						filterMatchMode="contains"
+						value="#{ensaioPaverBean.ensaioPaver.cliente}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um cliente" />
+						<f:selectItems value="#{ensaioPaverBean.clientes}" var="cliente"
+							itemValue="#{cliente}"
+							itemLabel="#{cliente.nomeFantasia} - #{cliente.cnpj}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="dNominal" value="Dimensão Nominal (mm):" />
+					<p:selectOneMenu id="dNominal" filter="true"
+						filterMatchMode="contains"
+						value="#{ensaioPaverBean.ensaioPaver.dimensaoNominal}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Dimensão nominal' é obrigatório">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione uma dimensão" />
+						<f:selectItems value="#{ensaioPaverBean.dimensoes}" var="dNominal"
+							itemValue="#{dNominal}" itemLabel="#{dNominal.dimensaoNominal}" />
+					</p:selectOneMenu>
+
+					<h3 class="first">Observações:</h3>
+					<p:editor id="editor" widgetVar="editorWidget"
+						value="#{ensaioPaverBean.ensaioPaver.observacoes}" width="600"
+						height="200" />
+
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{ensaioPaverBean.salvar()}"
+						update=":mensagem :formCadastro:painel :formListagem:tabela" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

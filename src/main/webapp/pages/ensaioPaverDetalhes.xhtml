@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/template.xhtml">
+
+	<ui:define name="titulo">
+		<title>SGLabCon | Laboratório</title>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="formDetalhe">
+			<p:fieldset id="fs" legend="Ensaio de Pavers - Detalhes">
+				<p:panelGrid id="painelDetalhe" columns="2">
+
+					<p:outputLabel value="Laboratorista: " />
+					<h:outputText
+						value="#{ensaioPaverBean.ensaioDetalhe.usuario.nomeCompleto}" />
+
+					<p:outputLabel value="Codigo:" />
+					<h:outputText value="#{ensaioPaverBean.ensaioDetalhe.codigo}" />
+
+					<p:outputLabel value="Idade do ensaio:" />
+					<h:outputText value="#{ensaioPaverBean.ensaioDetalhe.idade} dias" />
+
+					<p:outputLabel value="Data de fabricação:" />
+					<h:outputText
+						value="#{ensaioPaverBean.ensaioDetalhe.dataFabricacao}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+					</h:outputText>
+
+					<p:outputLabel value="Lote:" />
+					<h:outputText value="#{ensaioPaverBean.ensaioDetalhe.lote}" />
+
+					<p:outputLabel value="Resistência Característica:" />
+					<h:outputText
+						value="#{ensaioPaverBean.ensaioDetalhe.resistenciaCaracteristica}" />
+
+					<p:outputLabel value="Tipo de Peça:" />
+					<h:outputText value="#{ensaioPaverBean.ensaioDetalhe.tipoPeca}" />
+
+					<p:outputLabel value="Qtd. de amostras:" />
+					<h:outputText value="#{ensaioPaverBean.ensaioDetalhe.qtdAmostras}" />
+
+					<p:outputLabel value="Dimensão Nominal:" />
+					<h:outputText
+						value="#{ensaioPaverBean.ensaioDetalhe.dimensaoNominal.dimensaoNominal}" />
+
+					<p:outputLabel value="Fator de Correção:" />
+					<h:outputText
+						value="#{ensaioPaverBean.ensaioDetalhe.fatorCorrecao}" />
+
+					<p:outputLabel value="Cliente:" />
+					<h:outputText
+						value="#{ensaioPaverBean.ensaioDetalhe.cliente.nomeFantasia}" />
+				</p:panelGrid>
+
+				<h3>Observações:</h3>
+				<p:panelGrid columns="1">
+					<h:outputText value="#{ensaioPaverBean.ensaioDetalhe.observacoes}"
+						escape="false" />
+				</p:panelGrid>
+
+				<br />
+
+				<p:carousel id="carousel" value="#{ensaioPaverBean.amostras}"
+					headerText="Amostra" var="amostra" itemStyle="height:290px"
+					numVisible="1" easing="easeOutBounce" style="width:450px"
+					circular="true">
+					<p:panelGrid columns="2" style="width:100%"
+						columnClasses="label,value">
+
+						<h:outputLabel value="Codigo da Amostra:" />
+						<h:outputText value="#{amostra.codigo}" />
+						<h:outputLabel value="Indentificação da amostra:" />
+						<h:outputText value="#{amostra.identificacao}" />
+						<h:outputLabel value="Realizado por:" />
+						<h:outputText value="#{amostra.usuario.nomeCompleto}" />
+						<h:outputLabel value="Data:" />
+						<h:outputText value="#{amostra.data}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+						</h:outputText>
+						<h:outputLabel value="Força Aplicada (kN):" />
+						<h:outputText value="#{amostra.forcaAplicada}" />
+						<p:outputLabel value="Conversão Força aplicada (MPa):" />
+						<h:outputText value="#{amostra.conversaoFA}" />
+						<h:outputLabel value="Altura/Espessura real (mm):" />
+						<h:outputText value="#{amostra.alturaReal}" />
+						<h:outputLabel value="Comprimento real (mm):" />
+						<h:outputText value="#{amostra.comprimentoReal}" />
+						<h:outputLabel value="Largura real (mm):" />
+						<h:outputText value="#{amostra.larguraReal}" />
+						<p:outputLabel value="Status:" />
+						<h:outputText value="#{amostra.statusFormatado}"
+							style="color:#{ensaioPaverBean.alterarCorStatus(amostra)}" />
+					</p:panelGrid>
+				</p:carousel>
+
+				<br />
+				<br />
+
+				<p:panelGrid columns="3">
+					<p:commandButton value="Nova Amostra"
+						actionListener="#{ensaioPaverBean.novaAmostra()}"
+						oncomplete="PF('novaAmostraDialogo').show();"
+						update=":formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+					<p:commandButton value="Imprimir" type="button"
+						icon="ui-icon-print">
+						<p:printer target="formDetalhe" />
+					</p:commandButton>
+				</p:panelGrid>
+			</p:fieldset>
+		</h:form>
+
+		<p:dialog header="Nova Amostra" widgetVar="novaAmostraDialogo"
+			closable="false" draggable="false" resizable="false" modal="true">
+			<h:form id="formCadastro">
+				<p:panelGrid id="painel" columns="2">
+					<p:outputLabel for="laboratorista" value="Laboratorista" />
+					<h:outputText id="laboratorista"
+						value="#{autenticacaoBean.usuarioLogado.nomeCompleto}" />
+					<p:outputLabel for="identificacao"
+						value="Indentificação da Amostra" />
+					<p:inputText id="identificacao" maxlength="25" size="30"
+						value="#{ensaioPaverBean.amostraPaver.identificacao}" />
+					<p:outputLabel for="altura" value="Altura/Espessura real (mm)" />
+					<p:inputNumber id="altura" maxlength="25" size="30"
+						value="#{ensaioPaverBean.amostraPaver.alturaReal}" required="true"
+						requiredMessage="O campo 'Altura/Espessura real' é obrigatório"
+						decimalSeparator="," thousandSeparator="." />
+					<p:outputLabel for="comprimento" value="Comprimento real (mm)" />
+					<p:inputNumber id="comprimento" maxlength="25" size="30"
+						value="#{ensaioPaverBean.amostraPaver.comprimentoReal}" required="true"
+						requiredMessage="O campo 'Comprimento real' é obrigatório"
+						decimalSeparator="," thousandSeparator="." />
+					<p:outputLabel for="largura" value="Largura real (mm)" />
+					<p:inputNumber id="largura" maxlength="25" size="30"
+						value="#{ensaioPaverBean.amostraPaver.larguraReal}" required="true"
+						requiredMessage="O campo 'Largura real' é obrigatório"
+						decimalSeparator="," thousandSeparator="." />
+					<p:outputLabel for="forcaAplicada" value="Força aplicada (kN)" />
+					<p:inputNumber id="forcaAplicada" maxlength="25" size="30"
+						value="#{ensaioPaverBean.amostraPaver.forcaAplicada}"
+						required="true"
+						requiredMessage="O campo 'Força Aplicada' é obrigatório"
+						decimalSeparator="," thousandSeparator=".">
+						<p:ajax listener="#{ensaioPaverBean.converterUnidades()}"
+							update=":formCadastro:conversaoFA :formCadastro:status"
+							event="keyup" />
+					</p:inputNumber>
+					<p:outputLabel for="conversaoFA"
+						value="Conversão Força aplicada (mPA)" />
+					<h:outputText id="conversaoFA"
+						value="#{ensaioPaverBean.amostraPaver.conversaoFA}" />
+					<p:outputLabel for="status" value="Status" />
+					<h:outputText id="status"
+						style="color:#{ensaioPaverBean.alterarCorStatus()}"
+						value="#{ensaioPaverBean.amostraPaver.statusFormatado}" />
+				</p:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Registrar Amostra"
+						actionListener="#{ensaioPaverBean.salvarAmostra()}"
+						update=":mensagem :formCadastro:painel :formDetalhe:carousel" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('novaAmostraDialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+	</ui:define>
+</ui:composition>

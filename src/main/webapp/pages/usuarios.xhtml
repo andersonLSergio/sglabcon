@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/template.xhtml">
+
+	<ui:define name="titulo">
+		<title>SGLabCon | Usuários</title>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="formListagem">
+			<p:panel header="Usários - Listagem">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" value="#{usuarioBean.usuarios}" var="usuario"
+					rows="5" paginatorPosition="bottom">
+					<f:facet name="header">
+						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+							actionListener="#{usuarioBean.novo()}"
+							update="mensagem :formCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+
+					<p:column headerText="Usuário" filterBy="#{usuario.username}"
+						sortBy="#{usuario.username}">
+						<div align="center">
+							<h:outputText value="#{usuario.username}" />
+						</div>
+					</p:column>
+
+					<p:column headerText="Nome Completo"
+						filterBy="#{usuario.nomeCompleto}" filterMatchMode="contains"
+						sortBy="#{usuario.nomeCompleto}">
+						<div align="center">
+							<h:outputText value="#{usuario.nomeCompleto}" />
+						</div>
+					</p:column>
+
+					<p:column headerText="Papel" filterBy="#{usuario.papelFormatado}"
+						sortBy="#{usuario.papelFormatado}" style="width:170px;">
+						<div align="center">
+							<h:outputText value="#{usuario.papelFormatado}" />
+						</div>
+					</p:column>
+
+					<p:column headerText="Ativo" filterBy="#{usuario.ativoFormatado}"
+						sortBy="#{usuario.ativoFormatado}" style="width:120px;">
+						<div align="center">
+							<h:outputText value="#{usuario.ativoFormatado}" />
+						</div>
+					</p:column>
+
+					<p:column headerText="Opções" style="width:120px;">
+						<div align="center">
+							<p:commandButton icon="ui-icon-trash" title="Excluir"
+								actionListener="#{usuarioBean.excluir}"
+								update=":mensagem :formListagem:tabela">
+								<p:confirm header="Confirmação"
+									message="Deseja realmente excluir o registro |#{usuario.username}| ?" />
+								<f:attribute name="usuarioSelecionado" value="#{usuario}" />
+							</p:commandButton>
+							<p:commandButton icon="ui-icon-pencil" title="Editar"
+								actionListener="#{usuarioBean.editar}"
+								oncomplete="PF('dialogoEditarUsuario').show();"
+								update=":idDialogoEditar :formEditarUsuario:painel">
+								<f:attribute name="usuarioSelecionado" value="#{usuario}" />
+								<f:actionListener
+									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							</p:commandButton>
+							<p:commandButton icon="ui-icon-key" title="Alterar Senha"
+								actionListener="#{usuarioBean.editar}"
+								oncomplete="PF('dialogoAlterarSenha').show();"
+								update=":idDialogoAlterarSenha :formAlterarSenha:painel">
+								<f:attribute name="usuarioSelecionado" value="#{usuario}" />
+								<f:actionListener
+									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							</p:commandButton>
+						</div>
+
+					</p:column>
+				</p:dataTable>
+
+				<p:confirmDialog global="true">
+					<p:commandButton value="Sim" type="button"
+						styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+					<p:commandButton value="Não" type="button"
+						styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+				</p:confirmDialog>
+			</p:panel>
+		</h:form>
+
+		<p:dialog header="Usuários - Cadastro" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" closable="false">
+			<h:form id="formCadastro">
+				<h:panelGrid id="painel" columns="2">
+
+					<p:outputLabel for="nome" value="Nome Completo:" />
+					<p:inputText id="nome" value="#{usuarioBean.usuario.nomeCompleto}"
+						maxlength="25" size="30" required="true"
+						requiredMessage="O campo 'Nome' é obrigatório" />
+
+					<p:outputLabel for="username" value="Usuário:" />
+					<p:inputText id="username" value="#{usuarioBean.usuario.username}"
+						maxlength="25" size="30"
+						required="true" requiredMessage="O campo 'Usuário' é obrigatório" />
+
+					<p:outputLabel for="senha" value="Senha:" />
+					<p:password id="senha" maxlength="25" size="30"
+						value="#{usuarioBean.usuario.senhaSemCriptografia}"
+						required="true" requiredMessage="O campo 'Senha' é obrigatório" />
+
+					<p:outputLabel for="email" value="E-mail:" />
+					<p:inputText id="email" value="#{usuarioBean.usuario.email}"
+						maxlength="25" size="30" required="true"
+						requiredMessage="O campo 'E-mail' é obrigatório" />
+
+					<p:outputLabel for="papel" value="Papel" />
+					<p:selectOneRadio id="papel" value="#{usuarioBean.usuario.papel}"
+						required="true" requiredMessage="O campo 'Papel' é obrigatório">
+						<f:selectItem itemValue="A" itemLabel="Administrador" />
+						<f:selectItem itemValue="L" itemLabel="Laboratorista" />
+					</p:selectOneRadio>
+
+					<p:outputLabel for="ativo" value="Ativo:" />
+					<p:selectBooleanCheckbox id="ativo"
+						value="#{usuarioBean.usuario.ativo}" />
+
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{usuarioBean.salvar}"
+						update=":mensagem :formCadastro:painel :formListagem:tabela" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+
+			</h:form>
+		</p:dialog>
+
+		<p:dialog id="idDialogoEditar"
+			header="Editar Usuário - #{usuarioBean.usuario.nomeCompleto}"
+			widgetVar="dialogoEditarUsuario" draggable="false" resizable="false"
+			modal="true" closable="false">
+			<h:form id="formEditarUsuario">
+				<h:panelGrid id="painel" columns="2">
+
+					<p:outputLabel for="nome" value="Nome Completo:" />
+					<p:inputText id="nome" value="#{usuarioBean.usuario.nomeCompleto}"
+						maxlength="25" size="30" required="true"
+						requiredMessage="O campo 'Nome' é obrigatório" />
+
+					<p:outputLabel for="username" value="Usuário:" />
+					<p:inputText id="username" value="#{usuarioBean.usuario.username}"
+						maxlength="25" size="30"
+						required="true" requiredMessage="O campo 'Usuário' é obrigatório" />
+
+					<p:outputLabel for="email" value="E-mail:" />
+					<p:inputText id="email" value="#{usuarioBean.usuario.email}"
+						maxlength="25" size="30" required="true"
+						requiredMessage="O campo 'E-mail' é obrigatório" />
+
+					<p:outputLabel for="papel" value="Papel" />
+					<p:selectOneRadio id="papel" value="#{usuarioBean.usuario.papel}"
+						required="true" requiredMessage="O campo 'Papel' é obrigatório">
+						<f:selectItem itemValue="A" itemLabel="Administrador" />
+						<f:selectItem itemValue="L" itemLabel="Laboratorista" />
+					</p:selectOneRadio>
+
+					<p:outputLabel for="ativo" value="Ativo:" />
+					<p:selectBooleanCheckbox id="ativo"
+						value="#{usuarioBean.usuario.ativo}" />
+
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{usuarioBean.salvar}"
+						oncomplete="PF('dialogoEditarUsuario').hide();"
+						update=":mensagem :formCadastro:painel :formListagem:tabela" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogoEditarUsuario').hide();" />
+				</h:panelGrid>
+			</h:form>
+
+		</p:dialog>
+
+		<p:dialog id="idDialogoAlterarSenha"
+			header="Alterar Senha - #{usuarioBean.usuario.nomeCompleto}"
+			widgetVar="dialogoAlterarSenha" draggable="false" resizable="false"
+			modal="true" closable="false">
+
+			<h:form id="formAlterarSenha">
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel for="usuario" value="Usuário:" />
+					<h:outputText id="usuario" value="#{usuarioBean.usuario.username}" />
+
+					<p:outputLabel for="senha" value="Nova Senha" />
+					<p:password id="senha"
+						value="#{usuarioBean.usuario.senhaSemCriptografia}"
+						maxlength="25" size="30"
+						required="true"
+						requiredMessage="O campo 'Nova Senha' é obrigatório" />
+				</h:panelGrid>
+				<p:panelGrid columns="2">
+					<p:commandButton value="Confirmar"
+						actionListener="#{usuarioBean.alterarSenha()}"
+						oncomplete="PF('dialogoAlterarSenha').hide();"
+						update=":mensagem :formCadastro:painel :formListagem:tabela" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogoAlterarSenha').hide();" />
+				</p:panelGrid>
+			</h:form>
+
+
+		</p:dialog>
+	</ui:define>
+</ui:composition>

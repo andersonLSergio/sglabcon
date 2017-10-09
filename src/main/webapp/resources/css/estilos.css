@@ -1,0 +1,115 @@
+@charset "UTF-8";
+
+.row {
+    max-width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.col-1 {width: 8.33%}
+.col-2 {width: 16.66%}
+.col-3 {width: 25%}
+.col-4 {width: 33.33%}
+.col-5 {width: 41.66%}
+.col-6 {width: 50%}
+.col-7 {width: 58.33%}
+.col-8 {width: 66.66%}
+.col-9 {width: 75%}
+.col-10 {width: 83.33%}
+.col-11 {width: 91.66%}
+.col-12 {width: 100%}
+
+.logoMinimalTemplate {
+	width: 12%;
+}
+
+.imgFooter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 63%;
+}
+
+.imagemLogin {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 70%;
+}
+
+.imgCilindrico {
+	width: 100%;
+}
+
+.panelGridPrincipal {
+	width: 100%;
+}
+
+.imgLogout {
+	width: 1.7%;
+}
+
+.logoContainer {
+	display: block;
+}
+
+.divPrincipal {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	border: 3px solid #d9d6c4;
+	border-radius: 10px;
+	width: 650px;
+	align-content: center;
+	align-self: center;
+}
+
+.divTopo {
+	padding-bottom: 7px;
+	font-family: sans-serif;
+}
+
+.internaTopo {
+	border: 1px solid #d9d6c4;
+	background: #eceadf;
+	padding: 5px;
+	border-radius: 7px;
+}
+
+.divCabecalho {
+	padding-bottom: 10px;
+}
+
+.divFooter {
+	padding-top: 70px;
+	text-align: center;
+	font-family: sans-serif;
+	font-size: 12px;
+}
+
+.internaFooter {
+	padding: 10px 15px;
+}
+
+.divSobre {
+	display: block;
+	margin: auto;
+}
+
+.logoMinimalSobre {
+	width: 70%
+}
+
+.usuarioLogado {
+	font: bold;
+}
+
+.novoEnsaio {
+	padding-bottom: 10px;
+}
+
+/* Tamanho dos componentes do PrimeFaces */
+.ui-widget, .ui-widget .ui-widget {
+	font-size: 100% !important;
+}
