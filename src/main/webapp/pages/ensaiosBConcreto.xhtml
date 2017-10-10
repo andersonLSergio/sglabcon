@@ -57,16 +57,17 @@
 						</div>
 					</p:column>
 
-					<p:column headerText="Tipo de Produto" sortBy="#{ensaio.tipoProdutoBC.descricao}"
-						filterBy="#{ensaio.tipoProdutoBC.descricao}" filterMatchMode="contains">
+					<p:column headerText="Tipo de Produto"
+						sortBy="#{ensaio.tipoProdutoBC.descricao}"
+						filterBy="#{ensaio.tipoProdutoBC.descricao}"
+						filterMatchMode="contains">
 						<div align="center">
 							<h:outputText value="#{ensaio.tipoProdutoBC.descricao}" />
 						</div>
 					</p:column>
 
-					<p:column headerText="Máquina"
-						sortBy="#{ensaio.tipoMaquina}" filterBy="#{ensaio.tipoMaquina}"
-						filterMatchMode="contains">
+					<p:column headerText="Máquina" sortBy="#{ensaio.tipoMaquina}"
+						filterBy="#{ensaio.tipoMaquina}" filterMatchMode="contains">
 						<div align="center">
 							<h:outputText value="#{ensaio.tipoMaquina}" />
 						</div>
@@ -120,26 +121,30 @@
 					<p:spinner id="qtd" required="true"
 						requiredMessage="O campo 'Qtd. de Amostras' é obrigatório"
 						converterMessage="O valor informado no campo 'Qtd de Amostras' é inválido"
-						value="#{ensaioBConcretoBean.ensaioBConcreto.qtdAmostras}" min="0" />
+						value="#{ensaioBConcretoBean.ensaioBConcreto.qtdAmostras}" min="0">
+						<p:ajax listener="#{ensaioBConcretoBean.definirFator()}"
+							update=":formCadastro:fator" />
+					</p:spinner>
 
 					<p:outputLabel for="tipo" value="Tipo de Produto:" />
-					<p:selectOneMenu id="tipo" filter="true"
-						filterMatchMode="contains"
+					<p:selectOneMenu id="tipo" filter="true" filterMatchMode="contains"
 						value="#{ensaioBConcretoBean.ensaioBConcreto.tipoProdutoBC}"
 						converter="omnifaces.SelectItemsConverter" required="true"
 						requiredMessage="O campo 'Tipo de Produto' é obrigatório">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione um tipo" />
-						<f:selectItems value="#{ensaioBConcretoBean.tiposProduto}" var="tipo"
-							itemValue="#{tipo}"
+						<f:selectItems value="#{ensaioBConcretoBean.tiposProduto}"
+							var="tipo" itemValue="#{tipo}"
 							itemLabel="#{tipo.descricao} - #{tipo.dimensaoNominal}" />
 					</p:selectOneMenu>
 
 					<h:outputLabel for="fator" value="Fator 'p': *" />
-					<p:inputNumber id="fator"
+					<h:outputText id="fator"
 						value="#{ensaioBConcretoBean.ensaioBConcreto.fatorCorrecao}"
-						decimalSeparator="," thousandSeparator="." required="true"
-						requiredMessage="O campo 'Fator de Correção' é obrigatório" />
+						required="true"
+						requiredMessage="O campo 'Fator de Correção' é obrigatório">
+						<f:convertNumber locale="pt-BR" />
+					</h:outputText>
 
 					<h:outputLabel for="idade" value="Idade (dias):" />
 					<h:outputText id="idade"

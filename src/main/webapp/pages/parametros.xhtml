@@ -56,7 +56,7 @@
 											</div>
 										</p:column>
 
-										<p:column headerText="Resistência Característica"
+										<p:column headerText="Resistência C. Mínima"
 											filterBy="#{cResistencia.resistenciaCaracteristica}"
 											sortBy="#{cResistencia.resistenciaCaracteristica}">
 											<div align="center">
@@ -234,11 +234,11 @@
 						value="#{classeResistenciaBean.classeResistencia.nome}"
 						required="true" requiredMessage="O campo 'Nome' é obrigatório" />
 
-					<p:outputLabel for="rCaracteristica" value="R. Característica:" />
+					<p:outputLabel for="rCaracteristica" value="Resistência C. Mínima:" />
 					<p:inputText id="rCaracteristica" maxlength="15" size="20"
 						value="#{classeResistenciaBean.classeResistencia.resistenciaCaracteristica}"
 						required="true"
-						requiredMessage="O campo 'R. Característica' é obrigatório" />
+						requiredMessage="O campo 'Resistência C. Mínima' é obrigatório" />
 
 				</h:panelGrid>
 				<h:panelGrid columns="2">

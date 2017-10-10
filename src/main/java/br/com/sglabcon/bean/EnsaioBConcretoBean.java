@@ -104,10 +104,39 @@ public class EnsaioBConcretoBean extends GenericBean implements Serializable {
 		long resultado = calcDiaData(ensaioBConcreto.getDataFabricacao(), data2);
 		ensaioBConcreto.setIdade(new Short(resultado + ""));
 	}
-
-	// public void mostrarDimensaoNominal() {
-	//
-	// }
+	
+	public void definirFator() {
+		
+		int resultado = ensaioBConcreto.getQtdAmostras();
+		
+		if (resultado >= 18) {
+			ensaioBConcreto.setFatorCorrecao(1.04);
+		} else if (resultado >= 16) {
+			ensaioBConcreto.setFatorCorrecao(1.02);
+		} else if (resultado == 15) {
+			ensaioBConcreto.setFatorCorrecao(1.01);
+		} else if (resultado == 14) {
+			ensaioBConcreto.setFatorCorrecao(1.0);
+		} else if (resultado == 13) {
+			ensaioBConcreto.setFatorCorrecao(0.99);
+		} else if (resultado == 12) {
+			ensaioBConcreto.setFatorCorrecao(0.98);
+		} else if (resultado == 11) {
+			ensaioBConcreto.setFatorCorrecao(0.97);
+		} else if (resultado == 10) {
+			ensaioBConcreto.setFatorCorrecao(0.96);
+		} else if (resultado == 9) {
+			ensaioBConcreto.setFatorCorrecao(0.94);
+		} else if (resultado == 8) {
+			ensaioBConcreto.setFatorCorrecao(0.93);
+		} else if (resultado == 7) {
+			ensaioBConcreto.setFatorCorrecao(0.91);
+		} else if (resultado == 6) {
+			ensaioBConcreto.setFatorCorrecao(0.89);
+		} else {
+			ensaioBConcreto.setFatorCorrecao(0.0);
+		}
+	}
 
 	public void abrirDetalhes(EnsaioBConcreto ensaio) {
 		try {
