@@ -109,6 +109,10 @@
 	padding-bottom: 10px;
 }
 
+.imgTipoRuptura {
+	width: 80px;
+}
+
 /* Tamanho dos componentes do PrimeFaces */
 .ui-widget, .ui-widget .ui-widget {
 	font-size: 100% !important;

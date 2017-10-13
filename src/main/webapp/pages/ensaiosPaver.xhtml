@@ -98,7 +98,7 @@
 			draggable="false" resizable="false" modal="true" closable="false"
 			position="center" positionType="absolute">
 			<h:form id="formCadastro">
-				<h:panelGrid id="painel" class="novoEnsaio" columns="2">
+				<p:panelGrid id="painel" class="novoEnsaio" columns="2">
 					<h:outputLabel for="usuario" value="Laboratorista:" />
 					<h:outputText id="usuario"
 						value="#{autenticacaoBean.usuarioLogado.nomeCompleto}" />
@@ -186,7 +186,7 @@
 						value="#{ensaioPaverBean.ensaioPaver.observacoes}" width="600"
 						height="200" />
 
-				</h:panelGrid>
+				</p:panelGrid>
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar"
 						actionListener="#{ensaioPaverBean.salvar()}"

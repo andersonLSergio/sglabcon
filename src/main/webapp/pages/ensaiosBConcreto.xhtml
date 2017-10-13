@@ -96,7 +96,7 @@
 			draggable="false" resizable="false" modal="true" closable="false"
 			position="center" positionType="absolute">
 			<h:form id="formCadastro">
-				<h:panelGrid id="painel" class="novoEnsaio" columns="2">
+				<p:panelGrid id="painel" class="novoEnsaio" columns="2">
 
 					<p:outputLabel for="lote" value="Lote:" />
 					<p:inputText id="lote" maxlength="50" size="30"
@@ -181,7 +181,7 @@
 						width="600" height="200" />
 
 
-				</h:panelGrid>
+				</p:panelGrid>
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar"
 						actionListener="#{ensaioBConcretoBean.salvar()}"

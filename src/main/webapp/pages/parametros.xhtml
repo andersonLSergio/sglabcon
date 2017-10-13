@@ -29,6 +29,85 @@
 							causados por má configuração na seção de parâmetros." />
 					</h:panelGrid>
 				</p:tab>
+				
+				<p:tab id="tabCilindrico" title="Corpo de Prova Cilíndrico">
+					<center>
+						<h:panelGrid columns="2" cellpadding="10">
+							<h:panelGrid columns="1">
+								<p:panel header="Tipos de Ruptura">
+									<p:dataTable id="tabelaTRuptura" style="width:800px;"
+										emptyMessage="Nenhum registro encontrado." paginator="true"
+										value="#{tipoRupturaBean.tiposRuptura}"
+										var="tRuptura" rows="5" paginatorPosition="bottom">
+										<f:facet name="header">
+											<p:commandButton value="Novo"
+												oncomplete="PF('dialogoTRuptura').show();"
+												actionListener="#{tipoRupturaBean.novo}"
+												update="mensagem :formCadastroTRuptura:painel">
+												<f:actionListener
+													type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+											</p:commandButton>
+										</f:facet>
+
+										<p:column headerText="Código" filterBy="#{tRuptura.codigo}"
+											sortBy="#{tRuptura.codigo}" filterMatchMode="contains">
+											<div align="center">
+												<h:outputText value="#{tRuptura.codigo}" />
+											</div>
+										</p:column>
+
+										<p:column headerText="Tipo de Ruptura" filterBy="#{tRuptura.tipoRuptura}"
+											sortBy="#{tRuptura.tipoRuptura}" filterMatchMode="contains">
+											<div align="center">
+												<h:outputText value="#{tRuptura.tipoRuptura}" />
+											</div>
+										</p:column>
+										
+										<p:column headerText="Descrição" filterBy="#{tRuptura.descricao}"
+											sortBy="#{tRuptura.descricao}" filterMatchMode="contains">
+											<div align="center">
+												<h:outputText value="#{tRuptura.descricao}" />
+											</div>
+										</p:column>
+										
+										<p:column headerText="Imagem">
+											<div align="center">
+												<p:graphicImage library="img" styleClass="imgTipoRuptura" name="#{tRuptura.imgUrl}" alt="Tipo de Ruptura" />
+											</div>
+										</p:column>
+
+										<p:column headerText="Opções" style="width:120px;">
+											<div align="center">
+												<p:commandButton icon="ui-icon-trash"
+													actionListener="#{tipoRupturaBean.excluir}"
+													update=":mensagem :formListagem">
+													<p:confirm header="Confirmação"
+														message="Deseja realmente excluir o registro |#{tRuptura.tipoRuptura}| ?" />
+													<f:attribute name="tipoRSelecionada" value="#{tRuptura}" />
+												</p:commandButton>
+
+												<p:commandButton icon="ui-icon-pencil"
+													actionListener="#{tipoRupturaBean.editar}"
+													oncomplete="PF('dialogoTRuptura').show();"
+													update=":mensagem :formCadastroTRuptura:painel">
+													<f:attribute name="tipoRSelecionada" value="#{tRuptura}" />
+													<f:actionListener
+														type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+												</p:commandButton>
+											</div>
+										</p:column>
+									</p:dataTable>
+								</p:panel>
+							</h:panelGrid>
+
+							<h:panelGrid columns="1">
+								<p:panel header="Dimensões Básicas">
+									
+								</p:panel>
+							</h:panelGrid>
+						</h:panelGrid>
+					</center>
+				</p:tab>
 
 				<p:tab id="tabBloco" title="Bloco de Concreto">
 					<center>
@@ -298,6 +377,39 @@
 						update=":mensagem :formCadastroDPV:painel :formListagem" />
 					<p:commandButton value="Cancelar"
 						oncomplete="PF('dialogoDimensaoPV').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+		<p:dialog header="Tipos de Ruptura - Cadastro"
+			widgetVar="dialogoTRuptura" draggable="false" resizable="false"
+			modal="true" closable="false">
+			<h:form id="formCadastroTRuptura">
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel for="tipoRuptura" value="Tipo de Ruptura:" />
+					<p:inputText id="tipoRuptura" maxlength="50" size="30"
+						value="#{tipoRupturaBean.tipoRuptura.tipoRuptura}"
+						required="true" requiredMessage="O campo 'Tipo de Ruptura' é obrigatório" />
+
+					<p:outputLabel for="desc" value="Descrição:" />
+					<p:inputText id="desc" maxlength="150" size="50"
+						value="#{tipoRupturaBean.tipoRuptura.descricao}"
+						required="true"
+						requiredMessage="O campo 'Descrição' é obrigatório" />
+						
+					<p:outputLabel for="url" value="Nome da Imagem (nome.extensão):" />
+					<p:inputText id="url" maxlength="300" size="50"
+						value="#{tipoRupturaBean.tipoRuptura.imgUrl}"
+						required="true"
+						requiredMessage="O campo 'Nome da Imagem' é obrigatório" />
+
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{tipoRupturaBean.salvar}"
+						update=":mensagem :formCadastroTRuptura:painel :formListagem" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogoTRuptura').hide();" />
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

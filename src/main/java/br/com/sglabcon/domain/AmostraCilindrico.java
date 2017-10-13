@@ -37,6 +37,18 @@ public class AmostraCilindrico extends GenericDomain {
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private EnsaioCilindrico ensaioCilindrico;
+	
+	@Column(scale = 2)
+	private Double relacaoHD;
+	
+	@Column(scale = 2)
+	private Double alturaReal;
+	
+	@Column(scale = 2)
+	private Double diametroReal;
+	
+	@ManyToOne
+	private TipoRuptura tipoRuptura;
 
 	// Método destinado a mostrar status formatado na tela
 	@Transient
@@ -106,6 +118,38 @@ public class AmostraCilindrico extends GenericDomain {
 
 	public void setEnsaioCilindrico(EnsaioCilindrico ensaioCilindrico) {
 		this.ensaioCilindrico = ensaioCilindrico;
+	}
+	
+	public Double getRelacaoHD() {
+		return relacaoHD;
+	}
+	
+	public void setRelacaoHD(Double relacaoHD) {
+		this.relacaoHD = relacaoHD;
+	}
+	
+	public Double getAlturaReal() {
+		return alturaReal;
+	}
+	
+	public void setAlturaReal(Double alturaReal) {
+		this.alturaReal = alturaReal;
+	}
+	
+	public Double getDiametroReal() {
+		return diametroReal;
+	}
+	
+	public void setDiametroReal(Double diametroReal) {
+		this.diametroReal = diametroReal;
+	}
+	
+	public TipoRuptura getTipoRuptura() {
+		return tipoRuptura;
+	}
+	
+	public void setTipoRuptura(TipoRuptura tipoRuptura) {
+		this.tipoRuptura = tipoRuptura;
 	}
 
 }
