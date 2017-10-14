@@ -29,16 +29,16 @@
 							causados por má configuração na seção de parâmetros." />
 					</h:panelGrid>
 				</p:tab>
-				
+
 				<p:tab id="tabCilindrico" title="Corpo de Prova Cilíndrico">
 					<center>
 						<h:panelGrid columns="2" cellpadding="10">
 							<h:panelGrid columns="1">
 								<p:panel header="Tipos de Ruptura">
-									<p:dataTable id="tabelaTRuptura" style="width:800px;"
+									<p:dataTable id="tabelaTRuptura" style="width:780px;"
 										emptyMessage="Nenhum registro encontrado." paginator="true"
-										value="#{tipoRupturaBean.tiposRuptura}"
-										var="tRuptura" rows="5" paginatorPosition="bottom">
+										value="#{tipoRupturaBean.tiposRuptura}" var="tRuptura"
+										rows="5" paginatorPosition="bottom">
 										<f:facet name="header">
 											<p:commandButton value="Novo"
 												oncomplete="PF('dialogoTRuptura').show();"
@@ -50,35 +50,40 @@
 										</f:facet>
 
 										<p:column headerText="Código" filterBy="#{tRuptura.codigo}"
-											sortBy="#{tRuptura.codigo}" filterMatchMode="contains">
+											sortBy="#{tRuptura.codigo}" filterMatchMode="contains"
+											style="width:120px;">
 											<div align="center">
 												<h:outputText value="#{tRuptura.codigo}" />
 											</div>
 										</p:column>
 
-										<p:column headerText="Tipo de Ruptura" filterBy="#{tRuptura.tipoRuptura}"
-											sortBy="#{tRuptura.tipoRuptura}" filterMatchMode="contains">
+										<p:column headerText="Tipo de Ruptura"
+											filterBy="#{tRuptura.tipoRuptura}"
+											sortBy="#{tRuptura.tipoRuptura}" filterMatchMode="contains"
+											style="width:140px;">
 											<div align="center">
 												<h:outputText value="#{tRuptura.tipoRuptura}" />
 											</div>
 										</p:column>
-										
-										<p:column headerText="Descrição" filterBy="#{tRuptura.descricao}"
+
+										<p:column headerText="Descrição"
+											filterBy="#{tRuptura.descricao}"
 											sortBy="#{tRuptura.descricao}" filterMatchMode="contains">
 											<div align="center">
 												<h:outputText value="#{tRuptura.descricao}" />
 											</div>
 										</p:column>
-										
-										<p:column headerText="Imagem">
+
+										<p:column headerText="Imagem" style="width:100px;">
 											<div align="center">
-												<p:graphicImage library="img" styleClass="imgTipoRuptura" name="#{tRuptura.imgUrl}" alt="Tipo de Ruptura" />
+												<p:graphicImage library="img" styleClass="imgTipoRuptura"
+													name="#{tRuptura.imgUrl}" alt="Tipo de Ruptura" />
 											</div>
 										</p:column>
 
-										<p:column headerText="Opções" style="width:120px;">
+										<p:column headerText="Opções" style="width:80px;">
 											<div align="center">
-												<p:commandButton icon="ui-icon-trash"
+												<p:commandButton icon="ui-icon-trash" title="Excluir"
 													actionListener="#{tipoRupturaBean.excluir}"
 													update=":mensagem :formListagem">
 													<p:confirm header="Confirmação"
@@ -86,7 +91,7 @@
 													<f:attribute name="tipoRSelecionada" value="#{tRuptura}" />
 												</p:commandButton>
 
-												<p:commandButton icon="ui-icon-pencil"
+												<p:commandButton icon="ui-icon-pencil" title="Editar"
 													actionListener="#{tipoRupturaBean.editar}"
 													oncomplete="PF('dialogoTRuptura').show();"
 													update=":mensagem :formCadastroTRuptura:painel">
@@ -102,7 +107,61 @@
 
 							<h:panelGrid columns="1">
 								<p:panel header="Dimensões Básicas">
-									
+									<p:dataTable id="tabelaDBCilindrico" style="width:380px;"
+										emptyMessage="Nenhum registro encontrado." paginator="true"
+										value="#{dBasicaCilindrico.dimensoes}" var="dimensao" rows="10"
+										paginatorPosition="bottom">
+										<f:facet name="header">
+											<p:commandButton value="Novo"
+												oncomplete="PF('dialogoDBCilindrico').show();"
+												actionListener="#{dBasicaCilindrico.novo}"
+												update="mensagem :formCadastroDBCilindrico:painel">
+												<f:actionListener
+													type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+											</p:commandButton>
+										</f:facet>
+
+										<p:column headerText="Código" filterBy="#{dimensao.codigo}"
+											sortBy="#{dimensao.codigo}" filterMatchMode="contains">
+											<div align="center">
+												<h:outputText value="#{dimensao.codigo}" />
+											</div>
+										</p:column>
+
+										<p:column headerText="Dimensão Básica (d)"
+											filterBy="#{dimensao.dimensaoBasica}"
+											sortBy="#{dimensao.dimensaoBasica}"
+											filterMatchMode="contains">
+											<div align="center">
+												<h:outputText value="#{dimensao.dimensaoBasica}">
+													<f:convertNumber locale="pt-BR" />
+												</h:outputText>
+												<h:outputText value=" mm" />
+											</div>
+										</p:column>
+
+										<p:column headerText="Opções" style="width:80px;">
+											<div align="center">
+												<p:commandButton icon="ui-icon-trash" title="Excluir"
+													actionListener="#{dBasicaCilindrico.excluir}"
+													update=":mensagem :formListagem">
+													<p:confirm header="Confirmação"
+														message="Deseja realmente excluir o registro |#{dimensao.dimensaoBasica}| ?" />
+													<f:attribute name="dimensaoSelecionada" value="#{dimensao}" />
+												</p:commandButton>
+
+												<p:commandButton icon="ui-icon-pencil" title="Editar"
+													actionListener="#{dBasicaCilindrico.editar}"
+													oncomplete="PF('dialogoDBCilindrico').show();"
+													update=":mensagem :formCadastroDBCilindrico:painel">
+													<f:attribute name="dimensaoSelecionada" value="#{dimensao}" />
+													<f:actionListener
+														type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+												</p:commandButton>
+											</div>
+										</p:column>
+
+									</p:dataTable>
 								</p:panel>
 							</h:panelGrid>
 						</h:panelGrid>
@@ -146,7 +205,7 @@
 
 										<p:column headerText="Opções" style="width:120px;">
 											<div align="center">
-												<p:commandButton icon="ui-icon-trash"
+												<p:commandButton icon="ui-icon-trash" title="Excluir"
 													actionListener="#{classeResistenciaBean.excluir}"
 													update=":mensagem :formListagem">
 													<p:confirm header="Confirmação"
@@ -154,7 +213,7 @@
 													<f:attribute name="crSelecionada" value="#{cResistencia}" />
 												</p:commandButton>
 
-												<p:commandButton icon="ui-icon-pencil"
+												<p:commandButton icon="ui-icon-pencil" title="Editar"
 													actionListener="#{classeResistenciaBean.editar}"
 													oncomplete="PF('dialogoClasses').show();"
 													update=":mensagem :formCadastroCR:painel">
@@ -204,7 +263,7 @@
 
 										<p:column headerText="Opções" style="width:120px;">
 											<div align="center">
-												<p:commandButton icon="ui-icon-trash"
+												<p:commandButton icon="ui-icon-trash" title="Excluir"
 													actionListener="#{tipoProdutoBCBean.excluir}"
 													update=":mensagem :formListagem">
 													<p:confirm header="Confirmação"
@@ -213,7 +272,7 @@
 														value="#{tipoSelecionado}" />
 												</p:commandButton>
 
-												<p:commandButton icon="ui-icon-pencil"
+												<p:commandButton icon="ui-icon-pencil" title="Editar"
 													actionListener="#{tipoProdutoBCBean.editar}"
 													oncomplete="PF('dialogoTipos').show();"
 													update=":mensagem :formCadastroTipos:painel">
@@ -275,7 +334,7 @@
 
 								<p:column headerText="Opções" style="width:120px;">
 									<div align="center">
-										<p:commandButton icon="ui-icon-trash"
+										<p:commandButton icon="ui-icon-trash" title="Excluir"
 											actionListener="#{dimensaoNominalPVBean.excluir}"
 											update=":mensagem :formListagem">
 											<p:confirm header="Confirmação"
@@ -284,7 +343,7 @@
 												value="#{dimensaoPVSelecionada}" />
 										</p:commandButton>
 
-										<p:commandButton icon="ui-icon-pencil"
+										<p:commandButton icon="ui-icon-pencil" title="Editar"
 											actionListener="#{dimensaoNominalPVBean.editar}"
 											oncomplete="PF('dialogoDimensaoPV').show();"
 											update=":mensagem :formCadastroDPV:painel">
@@ -380,7 +439,7 @@
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
-		
+
 		<p:dialog header="Tipos de Ruptura - Cadastro"
 			widgetVar="dialogoTRuptura" draggable="false" resizable="false"
 			modal="true" closable="false">
@@ -388,19 +447,17 @@
 				<h:panelGrid id="painel" columns="2">
 					<p:outputLabel for="tipoRuptura" value="Tipo de Ruptura:" />
 					<p:inputText id="tipoRuptura" maxlength="50" size="30"
-						value="#{tipoRupturaBean.tipoRuptura.tipoRuptura}"
-						required="true" requiredMessage="O campo 'Tipo de Ruptura' é obrigatório" />
+						value="#{tipoRupturaBean.tipoRuptura.tipoRuptura}" required="true"
+						requiredMessage="O campo 'Tipo de Ruptura' é obrigatório" />
 
 					<p:outputLabel for="desc" value="Descrição:" />
 					<p:inputText id="desc" maxlength="150" size="50"
-						value="#{tipoRupturaBean.tipoRuptura.descricao}"
-						required="true"
+						value="#{tipoRupturaBean.tipoRuptura.descricao}" required="true"
 						requiredMessage="O campo 'Descrição' é obrigatório" />
-						
+
 					<p:outputLabel for="url" value="Nome da Imagem (nome.extensão):" />
 					<p:inputText id="url" maxlength="300" size="50"
-						value="#{tipoRupturaBean.tipoRuptura.imgUrl}"
-						required="true"
+						value="#{tipoRupturaBean.tipoRuptura.imgUrl}" required="true"
 						requiredMessage="O campo 'Nome da Imagem' é obrigatório" />
 
 				</h:panelGrid>
@@ -410,6 +467,28 @@
 						update=":mensagem :formCadastroTRuptura:painel :formListagem" />
 					<p:commandButton value="Cancelar"
 						oncomplete="PF('dialogoTRuptura').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<p:dialog header="Dimensão Básica - Cadastro"
+			widgetVar="dialogoDBCilindrico" draggable="false" resizable="false"
+			modal="true" closable="false">
+			<h:form id="formCadastroDBCilindrico">
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel for="dBasica" value="Dimensão Básica (mm):" />
+					<p:inputNumber id="dBasica" maxlength="50" size="30"
+						thousandSeparator="." decimalSeparator=","
+						value="#{dBasicaCilindrico.dimensaoBasica.dimensaoBasica}"
+						required="true"
+						requiredMessage="O campo 'Dimensão Básica' é obrigatório" />
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{dBasicaCilindrico.salvar}"
+						update=":mensagem :formCadastroDBCilindrico:painel :formListagem" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogoDBCilindrico').hide();" />
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

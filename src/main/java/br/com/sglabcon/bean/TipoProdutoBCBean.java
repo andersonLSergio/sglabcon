@@ -27,7 +27,7 @@ public class TipoProdutoBCBean {
 			TipoProdutoBCDAO tipoProdutoBCDAO = new TipoProdutoBCDAO();
 			tipos = tipoProdutoBCDAO.listar("descricao");
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao fazer consulta no banco");
+			Messages.addGlobalError("Houve um erro ao fazer consulta no banco");
 			erro.printStackTrace();
 		}
 	}
@@ -44,7 +44,7 @@ public class TipoProdutoBCBean {
 			novo();
 			listar();
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao salvar");
+			Messages.addGlobalError("Houve um erro ao salvar");
 			erro.printStackTrace();
 		}
 	}
@@ -58,7 +58,7 @@ public class TipoProdutoBCBean {
 			Messages.addGlobalInfo("Registro " + tipoProdutoBC.getDescricao() + " excluído com sucesso");
 			listar();
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao excluir");
+			Messages.addGlobalError("Houve um erro ao excluir");
 			erro.printStackTrace();
 		}
 	}

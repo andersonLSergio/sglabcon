@@ -7,6 +7,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import br.com.sglabcon.domain.Cliente;
+import br.com.sglabcon.domain.DimensaoBasicaCilindrico;
 import br.com.sglabcon.domain.EnsaioCilindrico;
 
 public class EnsaioCilindricoDAOTest {
@@ -18,6 +19,9 @@ public class EnsaioCilindricoDAOTest {
 		ClienteDAO clienteDAO = new ClienteDAO();
 		Cliente cliente = clienteDAO.buscar(1L);
 		
+		DimensaoBasicaCilindricoDAO dimensaoBasicaDAO = new DimensaoBasicaCilindricoDAO();
+		DimensaoBasicaCilindrico dimensaoBasica = dimensaoBasicaDAO.buscar(2L);
+		
 		EnsaioCilindrico ensaioCilindrico = new EnsaioCilindrico();
 		
 		ensaioCilindrico.setDataAddAgua(new Date());
@@ -26,7 +30,7 @@ public class EnsaioCilindricoDAOTest {
 		ensaioCilindrico.setQtdAmostras(13);
 		ensaioCilindrico.setObservacoes("Excluirrr");
 		ensaioCilindrico.setTipoEnsaio("Compressão");
-		ensaioCilindrico.setDimensaoBasica("150");
+		ensaioCilindrico.setDimensaoBasica(dimensaoBasica);
 		ensaioCilindrico.setCapeamento("Capeamento com Enxofre");
 		ensaioCilindrico.setResistenciaProjeto(70.5);
 		ensaioCilindrico.setIdade(new Short("7"));

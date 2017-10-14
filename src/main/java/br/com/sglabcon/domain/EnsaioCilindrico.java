@@ -17,7 +17,7 @@ public class EnsaioCilindrico extends GenericDomain {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataAddAgua;
 	
-	@Column(length = 30)
+	@Column(nullable = false, length = 30)
 	private String lote;
 	
 	@Column(length = 25 , nullable = false)
@@ -32,8 +32,9 @@ public class EnsaioCilindrico extends GenericDomain {
 	@Column(length = 25 , nullable = false)
 	private String tipoEnsaio;
 	
-	@Column(length = 40 , nullable = false)
-	private String dimensaoBasica;
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private DimensaoBasicaCilindrico dimensaoBasica;
 	
 	@Column(length = 40 , nullable = false)
 	private String capeamento;
@@ -101,11 +102,11 @@ public class EnsaioCilindrico extends GenericDomain {
 		this.tipoEnsaio = tipoEnsaio;
 	}
 
-	public String getDimensaoBasica() {
+	public DimensaoBasicaCilindrico getDimensaoBasica() {
 		return dimensaoBasica;
 	}
 
-	public void setDimensaoBasica(String dimensaoBasica) {
+	public void setDimensaoBasica(DimensaoBasicaCilindrico dimensaoBasica) {
 		this.dimensaoBasica = dimensaoBasica;
 	}
 

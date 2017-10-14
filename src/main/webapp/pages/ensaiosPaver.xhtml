@@ -104,8 +104,10 @@
 						value="#{autenticacaoBean.usuarioLogado.nomeCompleto}" />
 
 					<p:outputLabel for="lote" value="Lote:" />
-					<p:inputText id="lote" maxlength="50" size="30"
-						value="#{ensaioPaverBean.ensaioPaver.lote}" />
+					<p:inputText id="lote" maxlength="30" size="30"
+						value="#{ensaioPaverBean.ensaioPaver.lote}"
+						required="true"
+						requiredMessage="O campo 'Lote' é obrigatório" />
 
 					<p:outputLabel for="data" value="Data de Fabricação:" />
 					<p:calendar id="data" pattern="dd/MM/yyyy HH:mm:ss" locale="pt_BR"

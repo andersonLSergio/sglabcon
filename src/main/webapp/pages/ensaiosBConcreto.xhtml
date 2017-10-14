@@ -97,10 +97,15 @@
 			position="center" positionType="absolute">
 			<h:form id="formCadastro">
 				<p:panelGrid id="painel" class="novoEnsaio" columns="2">
+					<h:outputLabel for="usuario" value="Laboratorista:" />
+					<h:outputText id="usuario"
+						value="#{autenticacaoBean.usuarioLogado.nomeCompleto}" />
 
 					<p:outputLabel for="lote" value="Lote:" />
-					<p:inputText id="lote" maxlength="50" size="30"
-						value="#{ensaioBConcretoBean.ensaioBConcreto.lote}" />
+					<p:inputText id="lote" maxlength="30" size="30"
+						value="#{ensaioBConcretoBean.ensaioBConcreto.lote}"
+						required="true"
+						requiredMessage="O campo 'Lote' é obrigatório" />
 
 					<p:outputLabel for="data" value="Data de Fabricação:" />
 					<p:calendar id="data" pattern="dd/MM/yyyy HH:mm:ss" locale="pt_BR"

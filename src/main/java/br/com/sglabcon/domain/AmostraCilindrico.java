@@ -38,13 +38,13 @@ public class AmostraCilindrico extends GenericDomain {
 	@JoinColumn(nullable = false)
 	private EnsaioCilindrico ensaioCilindrico;
 	
-	@Column(scale = 2)
+	@Column(nullable = false, scale = 2)
 	private Double relacaoHD;
 	
-	@Column(scale = 2)
+	@Column(nullable = false, scale = 2)
 	private Double alturaReal;
 	
-	@Column(scale = 2)
+	@Column(nullable = false, scale = 2)
 	private Double diametroReal;
 	
 	@ManyToOne

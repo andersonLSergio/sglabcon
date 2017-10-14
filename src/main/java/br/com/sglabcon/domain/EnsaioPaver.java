@@ -17,7 +17,7 @@ public class EnsaioPaver extends GenericDomain{
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date dataFabricacao;
 	
-	@Column(length = 30)
+	@Column(nullable = false, length = 30)
 	private String lote;
 	
 	@Column(length = 25 , nullable = false)
