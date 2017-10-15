@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/template.xhtml">
+
+	<ui:define name="titulo">
+		<title>SGLabCon | Laboratório</title>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="formDetalhe">
+			<p:fieldset id="fs" legend="Ensaio de CPs Cilíndrico - Detalhes">
+				<p:panelGrid id="painelDetalhe" columns="2">
+
+					<p:outputLabel value="Laboratorista: " />
+					<h:outputText
+						value="#{ensaioCilindricoBean.ensaioDetalhe.usuario.nomeCompleto}" />
+
+					<p:outputLabel value="Codigo:" />
+					<h:outputText value="#{ensaioCilindricoBean.ensaioDetalhe.codigo}" />
+
+					<p:outputLabel value="Idade do ensaio:" />
+					<h:outputText
+						value="#{ensaioCilindricoBean.ensaioDetalhe.idade} dias" />
+
+					<p:outputLabel value="Data de Moldagem:" />
+					<h:outputText
+						value="#{ensaioCilindricoBean.ensaioDetalhe.dataAddAgua}">
+						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+					</h:outputText>
+
+					<p:outputLabel value="Lote:" />
+					<h:outputText value="#{ensaioCilindricoBean.ensaioDetalhe.lote}" />
+
+					<p:outputLabel value="Resistência de Projeto:" />
+					<h:outputText
+						value="#{ensaioCilindricoBean.ensaioDetalhe.resistenciaProjeto}">
+						<f:convertNumber locale="pt-BR" />
+					</h:outputText>
+
+					<p:outputLabel value="Qtd. de amostras:" />
+					<h:outputText
+						value="#{ensaioCilindricoBean.ensaioDetalhe.qtdAmostras}" />
+
+					<p:outputLabel value="Dimensão Básica (d) mm:" />
+					<h:outputText
+						value="#{ensaioCilindricoBean.ensaioDetalhe.dimensaoBasica.dimensaoBasica}">
+						<f:convertNumber locale="pt-BR" />
+					</h:outputText>
+
+					<p:outputLabel value="Capeamento:" />
+					<h:outputText
+						value="#{ensaioCilindricoBean.ensaioDetalhe.capeamento}" />
+
+					<p:outputLabel value="Cliente:" />
+					<h:outputText
+						value="#{ensaioCilindricoBean.ensaioDetalhe.cliente.nomeFantasia}" />
+				</p:panelGrid>
+
+				<h3>Observações:</h3>
+				<p:panelGrid columns="1">
+					<h:outputText
+						value="#{ensaioCilindricoBean.ensaioDetalhe.observacoes}"
+						escape="false" />
+				</p:panelGrid>
+
+				<br />
+
+				<p:carousel id="carousel" value="#{ensaioCilindricoBean.amostras}"
+					headerText="Amostra" var="amostra" itemStyle="height:380px"
+					numVisible="1" easing="easeOutBounce" style="width:600px"
+					circular="true">
+					<p:panelGrid columns="2" style="width:100%"
+						columnClasses="label,value">
+
+						<h:outputLabel value="Codigo da Amostra:" />
+						<h:outputText value="#{amostra.codigo}" />
+						<h:outputLabel value="Indentificação da Amostra:" />
+						<h:outputText value="#{amostra.identificacao}" />
+						<h:outputLabel value="Realizado por:" />
+						<h:outputText value="#{amostra.usuario.nomeCompleto}" />
+						<h:outputLabel value="Data:" />
+						<h:outputText value="#{amostra.data}">
+							<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+						</h:outputText>
+						<h:outputLabel value="Relação h/d:" />
+						<h:outputText value="#{amostra.relacaoHD}">
+							<f:convertNumber locale="pt-BR" />
+						</h:outputText>
+						<h:outputLabel value="Força Aplicada (kN):" />
+						<h:outputText value="#{amostra.forcaAplicada}">
+							<f:convertNumber locale="pt-BR" />
+						</h:outputText>
+						<p:outputLabel value="Conversão Força aplicada (MPa):" />
+						<h:outputText value="#{amostra.conversaoFA}">
+							<f:convertNumber locale="pt-BR" />
+						</h:outputText>
+						<h:outputLabel value="Tipo de Ruptura:"
+							rendered="#{ensaioCilindricoBean.tipoRupturaIsDefined(amostra)}" />
+						<h:outputText
+							value="#{amostra.tipoRuptura.tipoRuptura} - #{amostra.tipoRuptura.descricao}"
+							rendered="#{ensaioCilindricoBean.tipoRupturaIsDefined(amostra)}" />
+						<h:outputLabel value="Tipo de Ruptura - Ilustração:"
+							rendered="#{ensaioCilindricoBean.tipoRupturaIsDefined(amostra)}" />
+						<p:graphicImage library="img" styleClass="imgTipoRuptura"
+							name="#{amostra.tipoRuptura.imgUrl}"
+							alt="Tipo de Ruptura (Ilustração)"
+							rendered="#{ensaioCilindricoBean.tipoRupturaIsDefined(amostra)}" />
+						<p:outputLabel value="Status:" />
+						<h:outputText value="#{amostra.statusFormatado}"
+							style="color:#{ensaioCilindricoBean.alterarCorStatus(amostra)}" />
+					</p:panelGrid>
+				</p:carousel>
+
+				<br />
+				<br />
+
+				<p:panelGrid columns="3">
+					<p:commandButton value="Nova Amostra"
+						actionListener="#{ensaioCilindricoBean.novaAmostra}"
+						oncomplete="PF('novaAmostraDialogo').show();"
+						update=":formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+					</p:commandButton>
+					<p:commandButton value="Imprimir" type="button"
+						icon="ui-icon-print">
+						<p:printer target="formDetalhe" />
+					</p:commandButton>
+				</p:panelGrid>
+			</p:fieldset>
+
+		</h:form>
+
+		<p:dialog header="Nova Amostra" widgetVar="novaAmostraDialogo"
+			closable="false" draggable="false" resizable="false" modal="true">
+			<h:form id="formCadastro">
+
+				<p:panelGrid id="painel" columns="2">
+
+					<p:outputLabel for="laboratorista" value="Laboratorista" />
+					<h:outputText id="laboratorista"
+						value="#{autenticacaoBean.usuarioLogado.nomeCompleto}" />
+					<p:outputLabel for="identificacao"
+						value="Indentificação da Amostra" />
+					<p:inputText id="identificacao" maxlength="50" size="30"
+						value="#{ensaioCilindricoBean.amostra.identificacao}" />
+					<p:outputLabel for="forcaAplicada" value="Força Aplicada (N)" />
+					<p:inputNumber id="forcaAplicada" maxlength="50" size="30"
+						value="#{ensaioCilindricoBean.amostra.forcaAplicada}"
+						thousandSeparator="." decimalSeparator="," required="true"
+						requiredMessage="O campo 'Força Aplicada' é obrigatório">
+						<p:ajax listener="#{ensaioCilindricoBean.calcularAmostra()}"
+							update=":formCadastro" event="keyup" />
+					</p:inputNumber>
+
+					<p:outputLabel for="altura" value="Altura Real (mm)" />
+					<p:inputNumber id="altura"
+						value="#{ensaioCilindricoBean.amostra.alturaReal}"
+						thousandSeparator="." decimalSeparator="," required="true"
+						requiredMessage="O campo 'Altura Real' é obrigatório">
+						<p:ajax listener="#{ensaioCilindricoBean.calcularAmostra()}"
+							update=":formCadastro" event="keyup" />
+					</p:inputNumber>
+
+					<p:outputLabel for="diametro" value="Diâmetro Real (mm)" />
+					<p:inputNumber id="diametro"
+						value="#{ensaioCilindricoBean.amostra.diametroReal}"
+						thousandSeparator="." decimalSeparator="," required="true"
+						requiredMessage="O campo 'Diâmetro Real' é obrigatório">
+						<p:ajax listener="#{ensaioCilindricoBean.calcularAmostra()}"
+							update=":formCadastro" event="keyup" />
+					</p:inputNumber>
+
+					<p:outputLabel for="conversaoFA"
+						value="Resistência a Compressão (MPa)" />
+					<h:outputText id="conversaoFA"
+						value="#{ensaioCilindricoBean.amostra.conversaoFA}">
+						<f:convertNumber locale="pt-BR" />
+					</h:outputText>
+
+					<p:outputLabel for="relacaohd" value="Relação h/d" />
+					<h:outputText id="relacaohd"
+						value="#{ensaioCilindricoBean.amostra.relacaoHD}">
+						<f:convertNumber locale="pt-BR" />
+					</h:outputText>
+
+					<h:outputLabel for="fator" value="Fator 'p': *" />
+					<h:outputText id="fator"
+						value="#{ensaioCilindricoBean.amostra.fatorCorrecao}"
+						required="true"
+						requiredMessage="O campo 'Fator de Correção' é obrigatório">
+						<f:convertNumber locale="pt-BR" />
+					</h:outputText>
+
+					<p:outputLabel for="status" value="Status" />
+					<h:outputText id="status"
+						style="color:#{ensaioCilindricoBean.alterarCorStatus()}"
+						value="#{ensaioCilindricoBean.amostra.statusFormatado}" />
+
+					<p:outputLabel for="tRuptura" value="Tipo de Ruptura:" />
+					<p:selectOneMenu id="tRuptura" filter="true"
+						filterMatchMode="contains"
+						value="#{ensaioCilindricoBean.amostra.tipoRuptura}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione uma tipo de ruptura" />
+						<f:selectItems value="#{ensaioCilindricoBean.tiposRuptura}"
+							var="tRuptura" itemValue="#{tRuptura}"
+							itemLabel="#{tRuptura.tipoRuptura}" />
+						<p:ajax update=":formCadastro" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Tipo de Ruptura - Ilustração:"
+						rendered="#{ensaioCilindricoBean.tipoRupturaIsDefined()}" />
+					<p:graphicImage library="img" styleClass="imgTipoRuptura"
+						name="#{ensaioCilindricoBean.amostra.tipoRuptura.imgUrl}"
+						rendered="#{ensaioCilindricoBean.tipoRupturaIsDefined()}"
+						alt="Tipo de Ruptura (Ilustração)" />
+
+				</p:panelGrid>
+
+				<h:panelGrid columns="2">
+					<p:commandButton value="Registrar Amostra"
+						actionListener="#{ensaioCilindricoBean.salvarAmostra()}"
+						update=":mensagem :formCadastro:painel :formDetalhe:carousel" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('novaAmostraDialogo').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+	</ui:define>
+</ui:composition>

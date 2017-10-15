@@ -40,20 +40,26 @@ public class EnsaioPaverBean extends GenericBean {
 			EnsaioPaverDAO ensaioPaverDAO = new EnsaioPaverDAO();
 			ensaios = ensaioPaverDAO.listar();
 
-			ClienteDAO clienteDAO = new ClienteDAO();
-			clientes = clienteDAO.listar("nomeFantasia");
-
-			DimensaoNominalPVDAO dimensaoNominalPVDAO = new DimensaoNominalPVDAO();
-			dimensoes = dimensaoNominalPVDAO.listar();
-
 		} catch (RuntimeException erro) {
-			Messages.addFlashGlobalError("Houve um erro ao gerar novo ensaio.");
+			Messages.addFlashGlobalError("Houve um erro ao consultar banco.");
 			erro.printStackTrace();
 		}
 	}
 
 	public void novo() {
-		ensaioPaver = new EnsaioPaver();
+		try {
+			ensaioPaver = new EnsaioPaver();
+			
+			ClienteDAO clienteDAO = new ClienteDAO();
+			clientes = clienteDAO.listar("nomeFantasia");
+			
+			DimensaoNominalPVDAO dimensaoNominalPVDAO = new DimensaoNominalPVDAO();
+			dimensoes = dimensaoNominalPVDAO.listar();
+			
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Houve um erro ao gerar novo ensaio.");
+			erro.printStackTrace();
+		}
 	}
 
 	public void salvar() {

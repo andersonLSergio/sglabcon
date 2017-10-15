@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/templates/template.xhtml">
+
+	<ui:define name="titulo">
+		<title>SGLabCon | Laboratório</title>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="formListagem">
+			<p:panel header="Ensaios Bloco de Concreto - Listagem">
+				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+					paginator="true" rows="5" paginatorPosition="bottom"
+					value="#{ensaioCilindricoBean.ensaios}" var="ensaio">
+					<f:facet name="header">
+						<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+							actionListener="#{ensaioCilindricoBean.novo}"
+							update=":formCadastro:painel">
+							<f:actionListener
+								type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+						</p:commandButton>
+					</f:facet>
+
+					<p:column headerText="Código" sortBy="#{ensaio.codigo}"
+						filterBy="#{ensaio.codigo}">
+						<div align="center">
+							<h:outputText value="#{ensaio.codigo}" />
+						</div>
+					</p:column>
+
+					<p:column headerText="Lote" sortBy="#{ensaio.lote}"
+						filterBy="#{ensaio.lote}" filterMatchMode="contains">
+						<div align="center">
+							<h:outputText value="#{ensaio.lote}" />
+						</div>
+					</p:column>
+
+					<p:column headerText="Data de Moldagem"
+						sortBy="#{ensaio.dataAddAgua}" filterBy="#{ensaio.dataAddAgua}">
+						<div align="center">
+							<h:outputText value="#{ensaio.dataAddAgua}">
+								<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+							</h:outputText>
+						</div>
+					</p:column>
+
+					<p:column headerText="Qtd. de Amostras"
+						sortBy="#{ensaio.qtdAmostras}" filterBy="#{ensaio.qtdAmostras}">
+						<div align="center">
+							<h:outputText value="#{ensaio.qtdAmostras}" />
+						</div>
+					</p:column>
+
+					<p:column headerText="Máquina" sortBy="#{ensaio.tipoMaquina}"
+						filterBy="#{ensaio.tipoMaquina}" filterMatchMode="contains">
+						<div align="center">
+							<h:outputText value="#{ensaio.tipoMaquina}" />
+						</div>
+					</p:column>
+
+					<p:column headerText="Cliente"
+						sortBy="#{ensaio.cliente.nomeFantasia}"
+						filterBy="#{ensaio.cliente.nomeFantasia}"
+						filterMatchMode="contains">
+						<div align="center">
+							<h:outputText value="#{ensaio.cliente.nomeFantasia}" />
+						</div>
+					</p:column>
+
+					<p:column headerText="Opções" style="width:120px;">
+						<div align="center">
+							<p:commandButton value="Detalhes" icon="ui-icon-search"
+								actionListener="#{ensaioCilindricoBean.abrirDetalhes(ensaio)}" />
+						</div>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		</h:form>
+
+		<p:dialog header="Novo Ensaio - CP Cilíndrico" widgetVar="dialogo"
+			draggable="false" resizable="false" modal="true" closable="false"
+			position="center" positionType="absolute">
+			<h:form id="formCadastro">
+				<p:panelGrid id="painel" class="novoEnsaio" columns="2">
+					<h:outputLabel for="usuario" value="Laboratorista:" />
+					<h:outputText id="usuario"
+						value="#{autenticacaoBean.usuarioLogado.nomeCompleto}" />
+
+					<p:outputLabel for="lote" value="Lote:" />
+					<p:inputText id="lote" maxlength="30" size="30"
+						value="#{ensaioCilindricoBean.ensaioCilindrico.lote}"
+						required="true" requiredMessage="O campo 'Lote' é obrigatório" />
+
+					<p:outputLabel for="data" value="Data de moldagem:" />
+					<p:calendar id="data" pattern="dd/MM/yyyy HH:mm:ss" locale="pt_BR"
+						value="#{ensaioCilindricoBean.ensaioCilindrico.dataAddAgua}"
+						required="true"
+						requiredMessage="O campo 'Data de Moldagem' é obrigatório">
+						<p:ajax listener="#{ensaioCilindricoBean.calcularData()}"
+							update=":formCadastro:idade" />
+					</p:calendar>
+
+					<p:outputLabel for="maquina" value="Tipo de Máquina:" />
+					<p:inputText id="maquina" maxlength="15" size="30"
+						value="#{ensaioCilindricoBean.ensaioCilindrico.tipoMaquina}"
+						required="true"
+						requiredMessage="O campo 'Tipo da Máquina' é obrigatório" />
+
+					<h:outputLabel for="qtd" value="Qtd. de Amostras: *"></h:outputLabel>
+					<p:spinner id="qtd" required="true"
+						requiredMessage="O campo 'Qtd. de Amostras' é obrigatório"
+						converterMessage="O valor informado no campo 'Qtd de Amostras' é inválido"
+						value="#{ensaioCilindricoBean.ensaioCilindrico.qtdAmostras}"
+						min="0">
+					</p:spinner>
+
+					<h:outputLabel for="idade" value="Idade (dias):" />
+					<h:outputText id="idade"
+						value="#{ensaioCilindricoBean.ensaioCilindrico.idade}" />
+
+					<p:outputLabel for="cliente" value="Cliente:" />
+					<p:selectOneMenu id="cliente" filter="true"
+						filterMatchMode="contains"
+						value="#{ensaioCilindricoBean.ensaioCilindrico.cliente}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um cliente" />
+						<f:selectItems value="#{ensaioCilindricoBean.clientes}"
+							var="cliente" itemValue="#{cliente}"
+							itemLabel="#{cliente.nomeFantasia} - #{cliente.cnpj}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="dimensao" value="Dimensao Básica:" />
+					<p:selectOneMenu id="dimensao" filter="true"
+						filterMatchMode="contains"
+						value="#{ensaioCilindricoBean.ensaioCilindrico.dimensaoBasica}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Dimensão Básica' é obrigatório">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione uma dimensão" />
+						<f:selectItems value="#{ensaioCilindricoBean.dimensoes}"
+							var="dimensao" itemValue="#{dimensao}"
+							itemLabel="#{dimensao.dimensaoBasica} mm" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="capeamento" value="Tipo de Capeamento:" />
+					<p:inputText id="capeamento" maxlength="30" size="30"
+						value="#{ensaioCilindricoBean.ensaioCilindrico.capeamento}"
+						required="true"
+						requiredMessage="O campo 'Tipo da Capeamento' é obrigatório" />
+
+					<p:outputLabel for="resistenciaProjeto"
+						value="Resistência de Projeto (kN)" />
+					<p:inputNumber id="resistenciaProjeto" maxlength="15" size="30"
+						thousandSeparator="." decimalSeparator=","
+						value="#{ensaioCilindricoBean.ensaioCilindrico.resistenciaProjeto}"
+						required="true"
+						requiredMessage="O campo 'Resistência de Projeto' é obrigatório">
+					</p:inputNumber>
+
+					<h3 class="first">Observações:</h3>
+					<p:editor id="editor" widgetVar="editorWidget"
+						value="#{ensaioCilindricoBean.ensaioCilindrico.observacoes}"
+						width="600" height="200" />
+
+
+				</p:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{ensaioCilindricoBean.salvar()}"
+						update=":mensagem :formCadastro:painel :formListagem:tabela" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogo').hide();" />
+				</h:panelGrid>
+
+			</h:form>
+		</p:dialog>
+	</ui:define>
+</ui:composition>

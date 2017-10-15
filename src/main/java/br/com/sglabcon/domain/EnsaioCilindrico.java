@@ -29,9 +29,6 @@ public class EnsaioCilindrico extends GenericDomain {
 	@Column(length = 800)
 	private String observacoes;
 	
-	@Column(length = 25 , nullable = false)
-	private String tipoEnsaio;
-	
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private DimensaoBasicaCilindrico dimensaoBasica;
@@ -92,14 +89,6 @@ public class EnsaioCilindrico extends GenericDomain {
 
 	public void setObservacoes(String observacoes) {
 		this.observacoes = observacoes;
-	}
-
-	public String getTipoEnsaio() {
-		return tipoEnsaio;
-	}
-
-	public void setTipoEnsaio(String tipoEnsaio) {
-		this.tipoEnsaio = tipoEnsaio;
 	}
 
 	public DimensaoBasicaCilindrico getDimensaoBasica() {

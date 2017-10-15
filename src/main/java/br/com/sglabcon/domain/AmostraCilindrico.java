@@ -49,6 +49,10 @@ public class AmostraCilindrico extends GenericDomain {
 	
 	@ManyToOne
 	private TipoRuptura tipoRuptura;
+	
+	@Column(nullable = false, scale = 2)
+	private Double fatorCorrecao;
+
 
 	// Método destinado a mostrar status formatado na tela
 	@Transient
@@ -150,6 +154,14 @@ public class AmostraCilindrico extends GenericDomain {
 	
 	public void setTipoRuptura(TipoRuptura tipoRuptura) {
 		this.tipoRuptura = tipoRuptura;
+	}
+	
+	public Double getFatorCorrecao() {
+		return fatorCorrecao;
+	}
+	
+	public void setFatorCorrecao(Double fatorCorrecao) {
+		this.fatorCorrecao = fatorCorrecao;
 	}
 
 }

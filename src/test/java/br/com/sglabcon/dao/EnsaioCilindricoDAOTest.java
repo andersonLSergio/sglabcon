@@ -29,7 +29,6 @@ public class EnsaioCilindricoDAOTest {
 		ensaioCilindrico.setTipoMaquina("testeee");
 		ensaioCilindrico.setQtdAmostras(13);
 		ensaioCilindrico.setObservacoes("Excluirrr");
-		ensaioCilindrico.setTipoEnsaio("Compressão");
 		ensaioCilindrico.setDimensaoBasica(dimensaoBasica);
 		ensaioCilindrico.setCapeamento("Capeamento com Enxofre");
 		ensaioCilindrico.setResistenciaProjeto(70.5);
@@ -53,7 +52,6 @@ public class EnsaioCilindricoDAOTest {
 			System.out.println("Tipo de maquina: "+ ensaioCilindrico.getTipoMaquina());
 			System.out.println("Qtd de amostras: "+ ensaioCilindrico.getQtdAmostras());
 			System.out.println("Observações: "+ ensaioCilindrico.getObservacoes());
-			System.out.println("Tipo de Ensaio: "+ ensaioCilindrico.getTipoEnsaio());
 			System.out.println("Dimensão básica: "+ ensaioCilindrico.getDimensaoBasica());
 			System.out.println("Capeamento: "+ ensaioCilindrico.getCapeamento());
 			System.out.println("Resistência de Projeto: "+ ensaioCilindrico.getResistenciaProjeto());
