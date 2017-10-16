@@ -358,6 +358,67 @@
 						</p:panel>
 					</center>
 				</p:tab>
+				<p:tab id="tabMaquinas" title="Máquinas de Compressão">
+					<center>
+						<p:panel header="Classes de Máquinas - Listagem">
+							<p:dataTable id="tabelaMaquinas"
+								emptyMessage="Nenhum registro encontrado." paginator="true"
+								value="#{classeMaquinaBean.classes}"
+								var="classeSelecionada" rows="5" paginatorPosition="bottom">
+								<f:facet name="header">
+									<p:commandButton value="Novo"
+										oncomplete="PF('dialogoMaquinas').show();"
+										actionListener="#{classeMaquinaBean.novo()}"
+										update="mensagem :formCadastroMaquina:painel">
+										<f:actionListener
+											type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+									</p:commandButton>
+								</f:facet>
+
+								<p:column headerText="Código"
+									filterBy="#{classeSelecionada.codigo}"
+									sortBy="#{classeSelecionada.codigo}"
+									filterMatchMode="contains">
+									<div align="center">
+										<h:outputText value="#{classeSelecionada.codigo}" />
+									</div>
+								</p:column>
+
+								<p:column headerText="Classe de Máquina"
+									filterBy="#{classeSelecionada.classe}"
+									sortBy="#{classeSelecionada.classe}"
+									filterMatchMode="contains">
+									<div align="center">
+										<h:outputText value="#{classeSelecionada.classe}" />
+									</div>
+								</p:column>
+
+								<p:column headerText="Opções" style="width:120px;">
+									<div align="center">
+										<p:commandButton icon="ui-icon-trash" title="Excluir"
+											actionListener="#{classeMaquinaBean.excluir}"
+											update=":mensagem :formListagem">
+											<p:confirm header="Confirmação"
+												message="Deseja realmente excluir o registro codigo #{classeSelecionada.codigo} ?" />
+											<f:attribute name="classeSelecionada"
+												value="#{classeSelecionada}" />
+										</p:commandButton>
+
+										<p:commandButton icon="ui-icon-pencil" title="Editar"
+											actionListener="#{classeMaquinaBean.editar}"
+											oncomplete="PF('dialogoMaquinas').show();"
+											update=":mensagem :formCadastroMaquina:painel">
+											<f:attribute name="classeSelecionada"
+												value="#{classeSelecionada}" />
+											<f:actionListener
+												type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+										</p:commandButton>
+									</div>
+								</p:column>
+							</p:dataTable>
+						</p:panel>
+					</center>
+				</p:tab>
 			</p:tabView>
 
 		</h:form>
@@ -489,6 +550,26 @@
 						update=":mensagem :formCadastroDBCilindrico:painel :formListagem" />
 					<p:commandButton value="Cancelar"
 						oncomplete="PF('dialogoDBCilindrico').hide();" />
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+		<p:dialog header="Classe de Máquina - Cadastro"
+			widgetVar="dialogoMaquinas" draggable="false" resizable="false"
+			modal="true" closable="false">
+			<h:form id="formCadastroMaquina">
+				<h:panelGrid id="painel" columns="2">
+					<p:outputLabel for="classe" value="Descrição da Classe:" />
+					<p:inputText id="classe" maxlength="25" size="50"
+						value="#{classeMaquinaBean.classeMaquina.classe}" required="true"
+						requiredMessage="O campo 'Descrição da Classe' é obrigatório" />
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{classeMaquinaBean.salvar}"
+						update=":mensagem :formCadastroMaquina:painel :formListagem" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogoMaquinas').hide();" />
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

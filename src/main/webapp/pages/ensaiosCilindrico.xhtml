@@ -56,10 +56,10 @@
 						</div>
 					</p:column>
 
-					<p:column headerText="Máquina" sortBy="#{ensaio.tipoMaquina}"
-						filterBy="#{ensaio.tipoMaquina}" filterMatchMode="contains">
+					<p:column headerText="Classe de Máquina" sortBy="#{ensaio.classeMaquina.classe}"
+						filterBy="#{ensaio.classeMaquina.classe}" filterMatchMode="contains">
 						<div align="center">
-							<h:outputText value="#{ensaio.tipoMaquina}" />
+							<h:outputText value="#{ensaio.classeMaquina.classe}" />
 						</div>
 					</p:column>
 
@@ -105,11 +105,17 @@
 							update=":formCadastro:idade" />
 					</p:calendar>
 
-					<p:outputLabel for="maquina" value="Tipo de Máquina:" />
-					<p:inputText id="maquina" maxlength="15" size="30"
-						value="#{ensaioCilindricoBean.ensaioCilindrico.tipoMaquina}"
-						required="true"
-						requiredMessage="O campo 'Tipo da Máquina' é obrigatório" />
+					<p:outputLabel for="maquina" value="Classe da Máquina:" />
+					<p:selectOneMenu id="maquina" filter="true"
+						filterMatchMode="contains"
+						value="#{ensaioCilindricoBean.ensaioCilindrico.classeMaquina}"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione uma classe" />
+						<f:selectItems value="#{ensaioCilindricoBean.classes}"
+							var="classeMaquina" itemValue="#{classeMaquina}"
+							itemLabel="#{classeMaquina.classe}" />
+					</p:selectOneMenu>
 
 					<h:outputLabel for="qtd" value="Qtd. de Amostras: *"></h:outputLabel>
 					<p:spinner id="qtd" required="true"
@@ -155,7 +161,7 @@
 						requiredMessage="O campo 'Tipo da Capeamento' é obrigatório" />
 
 					<p:outputLabel for="resistenciaProjeto"
-						value="Resistência de Projeto (kN)" />
+						value="Resistência de Projeto (MPa)" />
 					<p:inputNumber id="resistenciaProjeto" maxlength="15" size="30"
 						thousandSeparator="." decimalSeparator=","
 						value="#{ensaioCilindricoBean.ensaioCilindrico.resistenciaProjeto}"

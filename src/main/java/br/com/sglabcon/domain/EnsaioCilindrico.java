@@ -20,8 +20,9 @@ public class EnsaioCilindrico extends GenericDomain {
 	@Column(nullable = false, length = 30)
 	private String lote;
 	
-	@Column(length = 25 , nullable = false)
-	private String tipoMaquina;
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private ClasseMaquina classeMaquina;
 	
 	@Column(nullable = false)
 	private Integer qtdAmostras;
@@ -67,12 +68,12 @@ public class EnsaioCilindrico extends GenericDomain {
 		this.lote = lote;
 	}
 
-	public String getTipoMaquina() {
-		return tipoMaquina;
+	public ClasseMaquina getClasseMaquina() {
+		return classeMaquina;
 	}
-
-	public void setTipoMaquina(String tipoMaquina) {
-		this.tipoMaquina = tipoMaquina;
+	
+	public void setClasseMaquina(ClasseMaquina classeMaquina) {
+		this.classeMaquina = classeMaquina;
 	}
 
 	public Integer getQtdAmostras() {

@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import br.com.sglabcon.domain.ClasseMaquina;
 import br.com.sglabcon.domain.ClasseResistencia;
 import br.com.sglabcon.domain.Cliente;
 import br.com.sglabcon.domain.EnsaioBConcreto;
@@ -20,12 +21,16 @@ public class EnsaioBConcretoDAOTest {
 
 		ClasseResistenciaDAO classeResistenciaDAO = new ClasseResistenciaDAO();
 		ClasseResistencia classeResistencia = classeResistenciaDAO.buscar(1L);
+		
+		ClasseMaquinaDAO classeMaquinaDAO = new ClasseMaquinaDAO();
+		ClasseMaquina classeMaquina = classeMaquinaDAO.buscar(1L);
+		
 
 		EnsaioBConcreto ensaioBConcreto = new EnsaioBConcreto();
 
 		ensaioBConcreto.setDataFabricacao(new Date());
 		ensaioBConcreto.setLote("13ADD2");
-		ensaioBConcreto.setTipoMaquina("MCT-1388");
+		ensaioBConcreto.setClasseMaquina(classeMaquina);
 		ensaioBConcreto.setQtdAmostras(5);
 		ensaioBConcreto.setObservacoes("Sem observações");
 		ensaioBConcreto.setFatorCorrecao(1.5);
@@ -46,7 +51,7 @@ public class EnsaioBConcretoDAOTest {
 		for (EnsaioBConcreto ensaioBConcreto : resultado) {
 			System.out.println("Código: " + ensaioBConcreto.getCodigo());
 			System.out.println("Lote: " + ensaioBConcreto.getLote());
-			System.out.println("Tipo de Máquina: " + ensaioBConcreto.getTipoMaquina());
+			System.out.println("Classe de Máquina: " + ensaioBConcreto.getClasseMaquina());
 			System.out.println("Qtd de Amostras: " + ensaioBConcreto.getQtdAmostras());
 			System.out.println("Observações: " + ensaioBConcreto.getObservacoes());
 			System.out.println("Fator de Correção: " + ensaioBConcreto.getFatorCorrecao());
@@ -67,7 +72,7 @@ public class EnsaioBConcretoDAOTest {
 		
 		System.out.println("Código: " + ensaioBConcreto.getCodigo());
 		System.out.println("Lote: " + ensaioBConcreto.getLote());
-		System.out.println("Tipo de Máquina: " + ensaioBConcreto.getTipoMaquina());
+		System.out.println("Classe de Máquina: " + ensaioBConcreto.getClasseMaquina());
 		System.out.println("Qtd de Amostras: " + ensaioBConcreto.getQtdAmostras());
 		System.out.println("Observações: " + ensaioBConcreto.getObservacoes());
 		System.out.println("Fator de Correção: " + ensaioBConcreto.getFatorCorrecao());

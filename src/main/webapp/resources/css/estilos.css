@@ -113,6 +113,10 @@
 	width: 80px;
 }
 
+.imgTipoRupturaDialogo {
+	width: 120px;
+}
+
 /* Tamanho dos componentes do PrimeFaces */
 .ui-widget, .ui-widget .ui-widget {
 	font-size: 100% !important;

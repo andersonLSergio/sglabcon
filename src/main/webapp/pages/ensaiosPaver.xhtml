@@ -67,10 +67,10 @@
 						</div>
 					</p:column>
 
-					<p:column headerText="Máquina" sortBy="#{ensaio.tipoMaquina}"
-						filterBy="#{ensaio.tipoMaquina}" filterMatchMode="contains">
+					<p:column headerText="Classe de Máquina" sortBy="#{ensaio.classeMaquina.classe}"
+						filterBy="#{ensaio.classeMaquina.classe}" filterMatchMode="contains">
 						<div align="center">
-							<h:outputText value="#{ensaio.tipoMaquina}" />
+							<h:outputText value="#{ensaio.classeMaquina.classe}" />
 						</div>
 					</p:column>
 

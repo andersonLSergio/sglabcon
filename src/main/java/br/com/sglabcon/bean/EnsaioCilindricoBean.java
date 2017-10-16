@@ -13,11 +13,13 @@ import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 
 import br.com.sglabcon.dao.AmostraCilindricoDAO;
+import br.com.sglabcon.dao.ClasseMaquinaDAO;
 import br.com.sglabcon.dao.ClienteDAO;
 import br.com.sglabcon.dao.DimensaoBasicaCilindricoDAO;
 import br.com.sglabcon.dao.EnsaioCilindricoDAO;
 import br.com.sglabcon.dao.TipoRupturaDAO;
 import br.com.sglabcon.domain.AmostraCilindrico;
+import br.com.sglabcon.domain.ClasseMaquina;
 import br.com.sglabcon.domain.Cliente;
 import br.com.sglabcon.domain.DimensaoBasicaCilindrico;
 import br.com.sglabcon.domain.EnsaioCilindrico;
@@ -43,7 +45,10 @@ public class EnsaioCilindricoBean extends GenericBean {
 	private TipoRuptura tipoRuptura;
 	private List<TipoRuptura> tiposRuptura;
 	
-	DecimalFormat formatador = new DecimalFormat("#.00");
+	private ClasseMaquina classeMaquina;
+	private List<ClasseMaquina> classes;
+	
+	private DecimalFormat formatador = new DecimalFormat("#.00");
 
 	@PostConstruct
 	public void listar() {
@@ -69,6 +74,9 @@ public class EnsaioCilindricoBean extends GenericBean {
 
 			ClienteDAO clienteDAO = new ClienteDAO();
 			clientes = clienteDAO.listar("nomeFantasia");
+			
+			ClasseMaquinaDAO classeMaquinaDAO = new ClasseMaquinaDAO();
+			classes = classeMaquinaDAO.listar("classe");
 
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Houve um erro ao fazer gerar novo ensaio");
@@ -88,7 +96,7 @@ public class EnsaioCilindricoBean extends GenericBean {
 
 			Messages.addFlashGlobalInfo("Ensaio cadastrado com sucesso!");
 
-			// abrirDetalhes(ensaioCilindrico);
+			abrirDetalhes(ensaioCilindrico);
 
 			novo();
 			listar();
@@ -166,7 +174,8 @@ public class EnsaioCilindricoBean extends GenericBean {
 			amostra.setConversaoFA(resultado);
 			
 			// testar se a amostra está dentro da resistência especificada no projeto
-			if (amostra.getConversaoFA() >= ensaioDetalhe.getResistenciaProjeto()) {
+			//e se a relação h/d está menor ou igual a 2.02
+			if (amostra.getConversaoFA() >= ensaioDetalhe.getResistenciaProjeto() && amostra.getRelacaoHD() <= 2.02) {
 				amostra.setStatus(true);
 			} else {
 				amostra.setStatus(false);
@@ -358,5 +367,21 @@ public class EnsaioCilindricoBean extends GenericBean {
 	
 	public void setTiposRuptura(List<TipoRuptura> tiposRuptura) {
 		this.tiposRuptura = tiposRuptura;
+	}
+	
+	public ClasseMaquina getClasseMaquina() {
+		return classeMaquina;
+	}
+	
+	public void setClasseMaquina(ClasseMaquina classeMaquina) {
+		this.classeMaquina = classeMaquina;
+	}
+	
+	public List<ClasseMaquina> getClasses() {
+		return classes;
+	}
+	
+	public void setClasses(List<ClasseMaquina> classes) {
+		this.classes = classes;
 	}
 }

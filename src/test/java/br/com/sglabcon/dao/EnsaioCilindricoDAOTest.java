@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import br.com.sglabcon.domain.ClasseMaquina;
 import br.com.sglabcon.domain.Cliente;
 import br.com.sglabcon.domain.DimensaoBasicaCilindrico;
 import br.com.sglabcon.domain.EnsaioCilindrico;
@@ -22,11 +23,14 @@ public class EnsaioCilindricoDAOTest {
 		DimensaoBasicaCilindricoDAO dimensaoBasicaDAO = new DimensaoBasicaCilindricoDAO();
 		DimensaoBasicaCilindrico dimensaoBasica = dimensaoBasicaDAO.buscar(2L);
 		
+		ClasseMaquinaDAO classeMaquinaDAO = new ClasseMaquinaDAO();
+		ClasseMaquina classeMaquina = classeMaquinaDAO.buscar(1L);
+		
 		EnsaioCilindrico ensaioCilindrico = new EnsaioCilindrico();
 		
 		ensaioCilindrico.setDataAddAgua(new Date());
 		ensaioCilindrico.setLote("13sa1das");
-		ensaioCilindrico.setTipoMaquina("testeee");
+		ensaioCilindrico.setClasseMaquina(classeMaquina);
 		ensaioCilindrico.setQtdAmostras(13);
 		ensaioCilindrico.setObservacoes("Excluirrr");
 		ensaioCilindrico.setDimensaoBasica(dimensaoBasica);
@@ -49,7 +53,7 @@ public class EnsaioCilindricoDAOTest {
 			System.out.println("Código: "+ ensaioCilindrico.getCodigo());
 			System.out.println("Data de adição de agua: "+ ensaioCilindrico.getDataAddAgua());
 			System.out.println("Lote: "+ ensaioCilindrico.getLote());
-			System.out.println("Tipo de maquina: "+ ensaioCilindrico.getTipoMaquina());
+			System.out.println("Classe de maquina: "+ ensaioCilindrico.getClasseMaquina());
 			System.out.println("Qtd de amostras: "+ ensaioCilindrico.getQtdAmostras());
 			System.out.println("Observações: "+ ensaioCilindrico.getObservacoes());
 			System.out.println("Dimensão básica: "+ ensaioCilindrico.getDimensaoBasica());

@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import br.com.sglabcon.domain.ClasseMaquina;
 import br.com.sglabcon.domain.Cliente;
 import br.com.sglabcon.domain.EnsaioPaver;
 
@@ -18,11 +19,14 @@ public class EnsaioPaverDAOTest {
 		ClienteDAO clienteDAO = new ClienteDAO();
 		Cliente cliente = clienteDAO.buscar(2L);
 		
+		ClasseMaquinaDAO classeMaquinaDAO = new ClasseMaquinaDAO();
+		ClasseMaquina classeMaquina = classeMaquinaDAO.buscar(1L);
+		
 		EnsaioPaver ensaioPaver = new EnsaioPaver();
 
 		ensaioPaver.setDataFabricacao(new Date());
 		ensaioPaver.setLote("13sa1das");
-		ensaioPaver.setTipoMaquina("testeee");
+		ensaioPaver.setClasseMaquina(classeMaquina);
 		ensaioPaver.setQtdAmostras(13);
 		ensaioPaver.setObservacoes("Exclusãaao");
 		ensaioPaver.setTipoPeca("16 faces");
@@ -44,7 +48,7 @@ public class EnsaioPaverDAOTest {
 		for(EnsaioPaver ensaioPaver : resultado) {
 			System.out.println("Código: " + ensaioPaver.getCodigo());
 			System.out.println("Lote: " + ensaioPaver.getLote());
-			System.out.println("Tipo de Máquina: " + ensaioPaver.getTipoMaquina());
+			System.out.println("Classe de Máquina: " + ensaioPaver.getClasseMaquina());
 			System.out.println("Qtd de Amostras: " + ensaioPaver.getQtdAmostras());
 			System.out.println("Observações: " + ensaioPaver.getObservacoes());
 			System.out.println("Dimensão Nominal: " + ensaioPaver.getDimensaoNominal());

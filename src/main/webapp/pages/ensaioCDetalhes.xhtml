@@ -23,15 +23,19 @@
 					<p:outputLabel value="Codigo:" />
 					<h:outputText value="#{ensaioCilindricoBean.ensaioDetalhe.codigo}" />
 
-					<p:outputLabel value="Idade do ensaio:" />
-					<h:outputText
-						value="#{ensaioCilindricoBean.ensaioDetalhe.idade} dias" />
-
 					<p:outputLabel value="Data de Moldagem:" />
 					<h:outputText
 						value="#{ensaioCilindricoBean.ensaioDetalhe.dataAddAgua}">
 						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
 					</h:outputText>
+
+					<p:outputLabel value="Idade do ensaio:" />
+					<h:outputText
+						value="#{ensaioCilindricoBean.ensaioDetalhe.idade} dias" />
+
+					<p:outputLabel value="Classe de Máquina:" />
+					<h:outputText
+						value="#{ensaioCilindricoBean.ensaioDetalhe.classeMaquina.classe}" />
 
 					<p:outputLabel value="Lote:" />
 					<h:outputText value="#{ensaioCilindricoBean.ensaioDetalhe.lote}" />
@@ -71,7 +75,7 @@
 				<br />
 
 				<p:carousel id="carousel" value="#{ensaioCilindricoBean.amostras}"
-					headerText="Amostra" var="amostra" itemStyle="height:380px"
+					headerText="Amostra" var="amostra" itemStyle="height:420px"
 					numVisible="1" easing="easeOutBounce" style="width:600px"
 					circular="true">
 					<p:panelGrid columns="2" style="width:100%"
@@ -89,6 +93,10 @@
 						</h:outputText>
 						<h:outputLabel value="Relação h/d:" />
 						<h:outputText value="#{amostra.relacaoHD}">
+							<f:convertNumber locale="pt-BR" />
+						</h:outputText>
+						<h:outputLabel value="Fator de Correção:" />
+						<h:outputText value="#{amostra.fatorCorrecao}">
 							<f:convertNumber locale="pt-BR" />
 						</h:outputText>
 						<h:outputLabel value="Força Aplicada (kN):" />
@@ -123,7 +131,7 @@
 					<p:commandButton value="Nova Amostra"
 						actionListener="#{ensaioCilindricoBean.novaAmostra}"
 						oncomplete="PF('novaAmostraDialogo').show();"
-						update=":formCadastro:painel">
+						update=":formCadastro">
 						<f:actionListener
 							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 					</p:commandButton>
@@ -145,17 +153,20 @@
 					<p:outputLabel for="laboratorista" value="Laboratorista" />
 					<h:outputText id="laboratorista"
 						value="#{autenticacaoBean.usuarioLogado.nomeCompleto}" />
+
 					<p:outputLabel for="identificacao"
 						value="Indentificação da Amostra" />
 					<p:inputText id="identificacao" maxlength="50" size="30"
 						value="#{ensaioCilindricoBean.amostra.identificacao}" />
+
 					<p:outputLabel for="forcaAplicada" value="Força Aplicada (N)" />
 					<p:inputNumber id="forcaAplicada" maxlength="50" size="30"
 						value="#{ensaioCilindricoBean.amostra.forcaAplicada}"
 						thousandSeparator="." decimalSeparator="," required="true"
 						requiredMessage="O campo 'Força Aplicada' é obrigatório">
 						<p:ajax listener="#{ensaioCilindricoBean.calcularAmostra()}"
-							update=":formCadastro" event="keyup" />
+							update=":formCadastro:conversaoFA :formCadastro:status"
+							event="keyup" />
 					</p:inputNumber>
 
 					<p:outputLabel for="altura" value="Altura Real (mm)" />
@@ -164,7 +175,8 @@
 						thousandSeparator="." decimalSeparator="," required="true"
 						requiredMessage="O campo 'Altura Real' é obrigatório">
 						<p:ajax listener="#{ensaioCilindricoBean.calcularAmostra()}"
-							update=":formCadastro" event="keyup" />
+							update=":formCadastro:conversaoFA :formCadastro:relacaohd :formCadastro:fator :formCadastro:status"
+							event="keyup" />
 					</p:inputNumber>
 
 					<p:outputLabel for="diametro" value="Diâmetro Real (mm)" />
@@ -173,7 +185,8 @@
 						thousandSeparator="." decimalSeparator="," required="true"
 						requiredMessage="O campo 'Diâmetro Real' é obrigatório">
 						<p:ajax listener="#{ensaioCilindricoBean.calcularAmostra()}"
-							update=":formCadastro" event="keyup" />
+							update=":formCadastro:conversaoFA :formCadastro:relacaohd :formCadastro:fator :formCadastro:status"
+							event="keyup" />
 					</p:inputNumber>
 
 					<p:outputLabel for="conversaoFA"
@@ -189,11 +202,9 @@
 						<f:convertNumber locale="pt-BR" />
 					</h:outputText>
 
-					<h:outputLabel for="fator" value="Fator 'p': *" />
+					<h:outputLabel for="fator" value="Fator 'p':" />
 					<h:outputText id="fator"
-						value="#{ensaioCilindricoBean.amostra.fatorCorrecao}"
-						required="true"
-						requiredMessage="O campo 'Fator de Correção' é obrigatório">
+						value="#{ensaioCilindricoBean.amostra.fatorCorrecao}">
 						<f:convertNumber locale="pt-BR" />
 					</h:outputText>
 
@@ -212,24 +223,24 @@
 						<f:selectItems value="#{ensaioCilindricoBean.tiposRuptura}"
 							var="tRuptura" itemValue="#{tRuptura}"
 							itemLabel="#{tRuptura.tipoRuptura}" />
-						<p:ajax update=":formCadastro" />
+						<p:ajax update=":formCadastro:img" />
 					</p:selectOneMenu>
-					
-					<p:outputLabel value="Tipo de Ruptura - Ilustração:"
-						rendered="#{ensaioCilindricoBean.tipoRupturaIsDefined()}" />
-					<p:graphicImage library="img" styleClass="imgTipoRuptura"
-						name="#{ensaioCilindricoBean.amostra.tipoRuptura.imgUrl}"
-						rendered="#{ensaioCilindricoBean.tipoRupturaIsDefined()}"
-						alt="Tipo de Ruptura (Ilustração)" />
-
 				</p:panelGrid>
+				<p:panel id="img">
+					<center>
+						<p:graphicImage library="img" styleClass="imgTipoRupturaDialogo"
+							rendered="#{ensaioCilindricoBean.tipoRupturaIsDefined()}"
+							name="#{ensaioCilindricoBean.amostra.tipoRuptura.imgUrl}"
+							alt="Tipo de Ruptura (Ilustração)" />
+					</center>
+				</p:panel>
 
 				<h:panelGrid columns="2">
 					<p:commandButton value="Registrar Amostra"
 						actionListener="#{ensaioCilindricoBean.salvarAmostra()}"
 						update=":mensagem :formCadastro:painel :formDetalhe:carousel" />
 					<p:commandButton value="Cancelar"
-						oncomplete="PF('novaAmostraDialogo').hide();" />
+						oncomplete="PF('novaAmostraDialogo').hide();"/>
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>

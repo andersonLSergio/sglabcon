@@ -68,6 +68,15 @@
 						goodLabel="considerável" strongLabel="forte" required="true"
 						requiredMessage="O campo 'Confirmar Nova Senha' é obrigatório" />
 				</h:panelGrid>
+				<br />
+				<hr />
+				<h:panelGrid columns="1">
+					<h:outputText id="info"
+						value="*Obs.: É altamente recomendável evitar o uso de " style="font-weight:bold" />
+					<h:outputText id="info2" value="senhas categorizadas como 'fraca'." style="font-weight:bold" />
+				</h:panelGrid>
+				<hr />
+				<br />
 				<p:panelGrid columns="2">
 					<p:commandButton value="Confirmar"
 						actionListener="#{usuarioBean.alterarSenha()}"
