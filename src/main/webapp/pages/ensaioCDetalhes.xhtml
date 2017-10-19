@@ -35,7 +35,7 @@
 
 					<p:outputLabel value="Classe de Máquina:" />
 					<h:outputText
-						value="#{ensaioCilindricoBean.ensaioDetalhe.classeMaquina.classe}" />
+						value="#{ensaioCilindricoBean.ensaioDetalhe.classeMaquina}" />
 
 					<p:outputLabel value="Lote:" />
 					<h:outputText value="#{ensaioCilindricoBean.ensaioDetalhe.lote}" />
@@ -52,7 +52,7 @@
 
 					<p:outputLabel value="Dimensão Básica (d) mm:" />
 					<h:outputText
-						value="#{ensaioCilindricoBean.ensaioDetalhe.dimensaoBasica.dimensaoBasica}">
+						value="#{ensaioCilindricoBean.ensaioDetalhe.dimensaoBasica}">
 						<f:convertNumber locale="pt-BR" />
 					</h:outputText>
 
@@ -75,7 +75,7 @@
 				<br />
 
 				<p:carousel id="carousel" value="#{ensaioCilindricoBean.amostras}"
-					headerText="Amostra" var="amostra" itemStyle="height:420px"
+					headerText="Amostra" var="amostra" itemStyle="height:300px"
 					numVisible="1" easing="easeOutBounce" style="width:600px"
 					circular="true">
 					<p:panelGrid columns="2" style="width:100%"
@@ -110,13 +110,7 @@
 						<h:outputLabel value="Tipo de Ruptura:"
 							rendered="#{ensaioCilindricoBean.tipoRupturaIsDefined(amostra)}" />
 						<h:outputText
-							value="#{amostra.tipoRuptura.tipoRuptura} - #{amostra.tipoRuptura.descricao}"
-							rendered="#{ensaioCilindricoBean.tipoRupturaIsDefined(amostra)}" />
-						<h:outputLabel value="Tipo de Ruptura - Ilustração:"
-							rendered="#{ensaioCilindricoBean.tipoRupturaIsDefined(amostra)}" />
-						<p:graphicImage library="img" styleClass="imgTipoRuptura"
-							name="#{amostra.tipoRuptura.imgUrl}"
-							alt="Tipo de Ruptura (Ilustração)"
+							value="#{amostra.tipoRuptura}"
 							rendered="#{ensaioCilindricoBean.tipoRupturaIsDefined(amostra)}" />
 						<p:outputLabel value="Status:" />
 						<h:outputText value="#{amostra.statusFormatado}"
@@ -216,7 +210,7 @@
 					<p:outputLabel for="tRuptura" value="Tipo de Ruptura:" />
 					<p:selectOneMenu id="tRuptura" filter="true"
 						filterMatchMode="contains"
-						value="#{ensaioCilindricoBean.amostra.tipoRuptura}"
+						value="#{ensaioCilindricoBean.amostra.tipoRupturaObj}"
 						converter="omnifaces.SelectItemsConverter">
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione uma tipo de ruptura" />
@@ -230,7 +224,7 @@
 					<center>
 						<p:graphicImage library="img" styleClass="imgTipoRupturaDialogo"
 							rendered="#{ensaioCilindricoBean.tipoRupturaIsDefined()}"
-							name="#{ensaioCilindricoBean.amostra.tipoRuptura.imgUrl}"
+							name="#{ensaioCilindricoBean.amostra.tipoRupturaObj.imgUrl}"
 							alt="Tipo de Ruptura (Ilustração)" />
 					</center>
 				</p:panel>

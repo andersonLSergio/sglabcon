@@ -56,10 +56,10 @@
 						</div>
 					</p:column>
 
-					<p:column headerText="Classe de Máquina" sortBy="#{ensaio.classeMaquina.classe}"
-						filterBy="#{ensaio.classeMaquina.classe}" filterMatchMode="contains">
+					<p:column headerText="Classe de Máquina" sortBy="#{ensaio.classeMaquina}"
+						filterBy="#{ensaio.classeMaquina}" filterMatchMode="contains">
 						<div align="center">
-							<h:outputText value="#{ensaio.classeMaquina.classe}" />
+							<h:outputText value="#{ensaio.classeMaquina}" />
 						</div>
 					</p:column>
 
@@ -113,7 +113,7 @@
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione uma classe" />
 						<f:selectItems value="#{ensaioCilindricoBean.classes}"
-							var="classeMaquina" itemValue="#{classeMaquina}"
+							var="classeMaquina" itemValue="#{classeMaquina.classe}"
 							itemLabel="#{classeMaquina.classe}" />
 					</p:selectOneMenu>
 
@@ -150,7 +150,7 @@
 						<f:selectItem noSelectionOption="true"
 							itemLabel="Selecione uma dimensão" />
 						<f:selectItems value="#{ensaioCilindricoBean.dimensoes}"
-							var="dimensao" itemValue="#{dimensao}"
+							var="dimensao" itemValue="#{dimensao.dimensaoBasica}"
 							itemLabel="#{dimensao.dimensaoBasica} mm" />
 					</p:selectOneMenu>
 

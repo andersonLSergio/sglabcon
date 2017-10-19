@@ -47,8 +47,11 @@ public class AmostraCilindrico extends GenericDomain {
 	@Column(nullable = false, scale = 2)
 	private Double diametroReal;
 	
-	@ManyToOne
-	private TipoRuptura tipoRuptura;
+	@Transient
+	private TipoRuptura tipoRupturaObj;
+	
+	@Column(length = 30)
+	private String tipoRuptura;
 	
 	@Column(nullable = false, scale = 2)
 	private Double fatorCorrecao;
@@ -148,11 +151,19 @@ public class AmostraCilindrico extends GenericDomain {
 		this.diametroReal = diametroReal;
 	}
 	
-	public TipoRuptura getTipoRuptura() {
+	public TipoRuptura getTipoRupturaObj() {
+		return tipoRupturaObj;
+	}
+	
+	public void setTipoRupturaObj(TipoRuptura tipoRupturaObj) {
+		this.tipoRupturaObj = tipoRupturaObj;
+	}
+	
+	public String getTipoRuptura() {
 		return tipoRuptura;
 	}
 	
-	public void setTipoRuptura(TipoRuptura tipoRuptura) {
+	public void setTipoRuptura(String tipoRuptura) {
 		this.tipoRuptura = tipoRuptura;
 	}
 	

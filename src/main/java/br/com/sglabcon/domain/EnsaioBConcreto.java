@@ -20,9 +20,8 @@ public class EnsaioBConcreto extends GenericDomain {
 	@Column(nullable = false, length = 30)
 	private String lote;
 
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private ClasseMaquina classeMaquina;
+	@Column(nullable = false, length = 30)
+	private String classeMaquina;
 
 	@Column(nullable = false)
 	private Integer qtdAmostras;
@@ -30,9 +29,8 @@ public class EnsaioBConcreto extends GenericDomain {
 	@Column(length = 800)
 	private String observacoes;
 
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private TipoProdutoBC TipoProdutoBC;
+	@Column(nullable = false, length = 60)
+	private String TipoProdutoBC;
 
 	@Column(length = 40, nullable = false)
 	private Double fatorCorrecao;
@@ -43,9 +41,8 @@ public class EnsaioBConcreto extends GenericDomain {
 	@ManyToOne
 	private Cliente cliente;
 
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private ClasseResistencia classeResistencia;
+	@Column(nullable = false, length = 30)
+	private String classeResistencia;
 	
 	@ManyToOne
 	@JoinColumn(nullable = false)
@@ -67,11 +64,11 @@ public class EnsaioBConcreto extends GenericDomain {
 		this.lote = lote;
 	}
 
-	public ClasseMaquina getClasseMaquina() {
+	public String getClasseMaquina() {
 		return classeMaquina;
 	}
 	
-	public void setClasseMaquina(ClasseMaquina classeMaquina) {
+	public void setClasseMaquina(String classeMaquina) {
 		this.classeMaquina = classeMaquina;
 	}
 
@@ -91,11 +88,11 @@ public class EnsaioBConcreto extends GenericDomain {
 		this.observacoes = observacoes;
 	}
 	
-	public TipoProdutoBC getTipoProdutoBC() {
+	public String getTipoProdutoBC() {
 		return TipoProdutoBC;
 	}
 	
-	public void setTipoProdutoBC(TipoProdutoBC tipoProdutoBC) {
+	public void setTipoProdutoBC(String tipoProdutoBC) {
 		TipoProdutoBC = tipoProdutoBC;
 	}
 
@@ -123,11 +120,11 @@ public class EnsaioBConcreto extends GenericDomain {
 		this.cliente = cliente;
 	}
 
-	public ClasseResistencia getClasseResistencia() {
+	public String getClasseResistencia() {
 		return classeResistencia;
 	}
 
-	public void setClasseResistencia(ClasseResistencia classeResistencia) {
+	public void setClasseResistencia(String classeResistencia) {
 		this.classeResistencia = classeResistencia;
 	}
 	

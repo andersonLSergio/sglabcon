@@ -20,9 +20,8 @@ public class EnsaioCilindrico extends GenericDomain {
 	@Column(nullable = false, length = 30)
 	private String lote;
 	
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private ClasseMaquina classeMaquina;
+	@Column(nullable = false, length = 30)
+	private String classeMaquina;
 	
 	@Column(nullable = false)
 	private Integer qtdAmostras;
@@ -30,9 +29,8 @@ public class EnsaioCilindrico extends GenericDomain {
 	@Column(length = 800)
 	private String observacoes;
 	
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private DimensaoBasicaCilindrico dimensaoBasica;
+	@Column(nullable = false, scale = 2)
+	private Double dimensaoBasica;
 	
 	@Column(length = 40 , nullable = false)
 	private String capeamento;
@@ -68,11 +66,11 @@ public class EnsaioCilindrico extends GenericDomain {
 		this.lote = lote;
 	}
 
-	public ClasseMaquina getClasseMaquina() {
+	public String getClasseMaquina() {
 		return classeMaquina;
 	}
 	
-	public void setClasseMaquina(ClasseMaquina classeMaquina) {
+	public void setClasseMaquina(String classeMaquina) {
 		this.classeMaquina = classeMaquina;
 	}
 
@@ -92,11 +90,11 @@ public class EnsaioCilindrico extends GenericDomain {
 		this.observacoes = observacoes;
 	}
 
-	public DimensaoBasicaCilindrico getDimensaoBasica() {
+	public Double getDimensaoBasica() {
 		return dimensaoBasica;
 	}
 
-	public void setDimensaoBasica(DimensaoBasicaCilindrico dimensaoBasica) {
+	public void setDimensaoBasica(Double dimensaoBasica) {
 		this.dimensaoBasica = dimensaoBasica;
 	}
 

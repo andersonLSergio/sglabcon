@@ -20,9 +20,8 @@ public class EnsaioPaver extends GenericDomain{
 	@Column(nullable = false, length = 30)
 	private String lote;
 	
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private ClasseMaquina classeMaquina;
+	@Column(nullable = false, length = 30)
+	private String classeMaquina;
 	
 	@Column(nullable = false)
 	private Integer qtdAmostras;
@@ -33,9 +32,8 @@ public class EnsaioPaver extends GenericDomain{
 	@Column(length = 25 , nullable = false)
 	private String tipoPeca;
 	
-	@ManyToOne
-	@JoinColumn(nullable = false)
-	private DimensaoNominalPV dimensaoNominal;
+	@Column(nullable = false, length = 50)
+	private String dimensaoNominal;
 	
 	@Column(length = 40 , nullable = false)
 	private Double fatorCorrecao;
@@ -74,11 +72,11 @@ public class EnsaioPaver extends GenericDomain{
 		this.lote = lote;
 	}
 
-	public ClasseMaquina getClasseMaquina() {
+	public String getClasseMaquina() {
 		return classeMaquina;
 	}
 	
-	public void setClasseMaquina(ClasseMaquina classeMaquina) {
+	public void setClasseMaquina(String classeMaquina) {
 		this.classeMaquina = classeMaquina;
 	}
 
@@ -106,11 +104,11 @@ public class EnsaioPaver extends GenericDomain{
 		this.tipoPeca = tipoPeca;
 	}
 
-	public DimensaoNominalPV getDimensaoNominal() {
+	public String getDimensaoNominal() {
 		return dimensaoNominal;
 	}
 
-	public void setDimensaoNominal(DimensaoNominalPV dimensaoNominal) {
+	public void setDimensaoNominal(String dimensaoNominal) {
 		this.dimensaoNominal = dimensaoNominal;
 	}
 

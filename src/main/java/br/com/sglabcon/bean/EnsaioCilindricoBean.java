@@ -223,6 +223,12 @@ public class EnsaioCilindricoBean extends GenericBean {
 			amostra.setUsuario(autenticacaoBean.getUsuarioLogado());
 
 			amostra.setEnsaioCilindrico(ensaioDetalhe);
+			
+			if(amostra.getTipoRupturaObj() != null) {
+				amostra.setTipoRuptura(amostra.getTipoRupturaObj().getTipoRuptura());				
+			} else {
+				amostra.setTipoRuptura("N/A");
+			}
 
 			AmostraCilindricoDAO amostraCilindricoDAO = new AmostraCilindricoDAO();
 			amostraCilindricoDAO.merge(amostra);
@@ -269,12 +275,12 @@ public class EnsaioCilindricoBean extends GenericBean {
 	public Boolean tipoRupturaIsDefined(AmostraCilindrico amostra) {
 		if(amostra.getTipoRuptura() == null) {
 			return false;
-		}
+		} 
 		return true;
 	}
 	
 	public Boolean tipoRupturaIsDefined() {
-		if(amostra.getTipoRuptura() == null) {
+		if(amostra.getTipoRupturaObj() == null) {
 			return false;
 		}
 		return true;

@@ -175,13 +175,6 @@ public class EnsaioBConcretoBean extends GenericBean implements Serializable {
 		Double resultado = converterKNemMpa(kn);
 		System.out.println("Conversão: " + resultado);
 		amostraBConcreto.setConversaoFA(resultado);
-
-		// testar se a amostra está dentro da resistência caracteristica dos parâmetros
-		if (amostraBConcreto.getConversaoFA() >= ensaioDetalhe.getClasseResistencia().getResistenciaCaracteristica()) {
-			amostraBConcreto.setStatus(true);
-		} else {
-			amostraBConcreto.setStatus(false);
-		}
 	}
 
 	public void salvarAmostra() {
