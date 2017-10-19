@@ -1,7 +1,11 @@
 package br.com.sglabcon.bean;
 
+import java.io.IOException;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+
+import org.omnifaces.util.Faces;
+import org.omnifaces.util.Messages;
 
 public class GenericBean {
 
@@ -22,5 +26,14 @@ public class GenericBean {
 	public Double converterKNemMpa(Double kn) {
 		Double mpa = kn * 1000;
 		return mpa;
+	}
+	
+	public void redirecionar() {
+		try {
+			Faces.redirect("./pages/principal.xhtml");
+		} catch (IOException e) {
+			Messages.addGlobalError(e.getMessage());
+			e.printStackTrace();
+		}
 	}
 }

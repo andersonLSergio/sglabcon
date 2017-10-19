@@ -199,6 +199,31 @@
 
 			</h:form>
 		</p:dialog>
+		
+		<p:dialog visible="true" widgetVar="dialogoFuncionalidade"
+			closable="false" draggable="false" resizable="false" modal="true"
+			width="50%">
+
+			<h:form>
+				<div class="divSobre" align="center">
+					<div>
+						<h:outputText
+							value=" Olá #{autenticacaoBean.usuarioLogado.nomeCompleto}. Esta funcionalidade 
+							ainda não está disponível. Aguarde novidades!" />
+					</div>
+
+					<div class="MaintContainer">
+						<p:graphicImage library="img" name="webmaintenance.png" />
+					</div>
+
+					<div align="right" style="padding-right: 20px">
+						<p:commandButton value="Retornar para a página principal"
+							actionListener="#{ensaioBConcretoBean.redirecionar()}" />
+					</div>
+				</div>
+			</h:form>
+
+		</p:dialog>
 
 	</ui:define>
 </ui:composition>

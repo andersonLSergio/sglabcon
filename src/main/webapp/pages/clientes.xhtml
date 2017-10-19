@@ -68,6 +68,15 @@
 								<f:actionListener
 									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 							</p:commandButton>
+							
+							<p:commandButton icon="ui-icon-search"
+								actionListener="#{clienteBean.mostrarDetalhes}"
+								oncomplete="PF('dialogoDetalhes').show();"
+								update=":formDetalhes:painel">
+								<f:attribute name="clienteSelecionado" value="#{cliente}" />
+								<f:actionListener
+									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
+							</p:commandButton>
 						</div>
 					</p:column>
 				</p:dataTable>
@@ -96,7 +105,7 @@
 						value="#{clienteBean.cliente.cnpj}" mask="99.999.999/9999.99"
 						required="true" requiredMessage="O campo 'CNPJ' é obrigatório" />
 
-					<p:outputLabel for="endereco" value="Endereço::" />
+					<p:outputLabel for="endereco" value="Endereço:" />
 					<p:inputText id="endereco" maxlength="60" size="50"
 						value="#{clienteBean.cliente.endereco}" required="true"
 						requiredMessage="O campo 'Endereço' é obrigatório" />
@@ -158,7 +167,48 @@
 					<p:commandButton value="Cancelar"
 						oncomplete="PF('dialogo').hide();" />
 				</h:panelGrid>
+				
+				
 
+			</h:form>
+		</p:dialog>
+		
+		<p:dialog header="Detalhes do Cliente" widgetVar="dialogoDetalhes"
+			draggable="false" resizable="false" modal="true" closable="false">
+			<h:form id="formDetalhes">
+				<p:panelGrid id="painel" columns="2">
+					<p:outputLabel value="Nome Fantasia:" />
+					<h:outputText value="#{clienteBean.cliente.nomeFantasia}" />
+
+					<p:outputLabel value="CNPJ:" />
+					<h:outputText value="#{clienteBean.cliente.cnpj}" />
+
+					<p:outputLabel value="Endereço:" />
+					<h:outputText value="#{clienteBean.cliente.endereco}" />
+
+					<p:outputLabel value="Bairro" />
+					<h:outputText value="#{clienteBean.cliente.bairro}" />
+
+					<p:outputLabel value="CEP:" />
+					<h:outputText value="#{clienteBean.cliente.cep}" />
+
+					<p:outputLabel value="Telefone Fixo:" />
+					<h:outputText value="#{clienteBean.cliente.telefoneFixo}" />
+
+					<p:outputLabel value="Telefone Móvel:" />
+					<h:outputText value="#{clienteBean.cliente.telefoneMovel}" />
+
+					<p:outputLabel value="E-mail:" />
+					<h:outputText value="#{clienteBean.cliente.email}" />
+
+					<p:outputLabel value="Cidade:" />
+					<h:outputText value="#{clienteBean.cliente.cidade.nome}-#{clienteBean.cliente.cidade.estado.sigla}" />
+
+				</p:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Fechar detalhes"
+						oncomplete="PF('dialogoDetalhes').hide();" />
+				</h:panelGrid>
 			</h:form>
 		</p:dialog>
 	</ui:define>

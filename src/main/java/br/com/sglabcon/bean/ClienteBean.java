@@ -114,6 +114,10 @@ public class ClienteBean implements Serializable {
 		}
 	}
 	
+	public void mostrarDetalhes(ActionEvent evento) {
+		cliente = (Cliente) evento.getComponent().getAttributes().get("clienteSelecionado");
+	}
+	
 	
 	//método destinado a popular a lista de cidades a partir da seleção do estado na lista.
 	public void popular() {
