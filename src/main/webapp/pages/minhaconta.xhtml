@@ -51,8 +51,14 @@
 				<h:panelGrid id="painel" columns="2">
 					<p:outputLabel for="usuario" value="Usuário:" />
 					<h:outputText id="usuario" value="#{usuarioBean.usuario.username}" />
+					
+					<p:outputLabel for="senhaAntiga" value="Senha antiga" />
+					<p:password id="senhaAntiga"
+						value="#{usuarioBean.usuario.senhaAntiga}"
+						required="true"
+						requiredMessage="O campo 'Senha antiga' é obrigatório" />
 
-					<p:outputLabel for="senha" value="Nova Senha" />
+					<p:outputLabel for="senha" value="Nova senha" />
 					<p:password id="senha"
 						value="#{usuarioBean.usuario.senhaSemCriptografia}"
 						match="senhaConfirmacao"
@@ -61,7 +67,7 @@
 						goodLabel="considerável" strongLabel="forte" required="true"
 						requiredMessage="O campo 'Nova Senha' é obrigatório" />
 
-					<p:outputLabel for="senhaConfirmacao" value="Confirmar Nova Senha" />
+					<p:outputLabel for="senhaConfirmacao" value="Confirmar nova senha" />
 					<p:password id="senhaConfirmacao"
 						value="#{usuarioBean.usuario.senhaConfirmacao}" feedback="true"
 						promptLabel="Digite sua senha" weakLabel="muito fraca"

@@ -14,7 +14,7 @@
 
 	<ui:define name="conteudo">
 		<h:form id="formListagem">
-			<p:panel header="Cidades - Listagem">
+			<p:panel header="Clientes - Listagem">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 					paginator="true" value="#{clienteBean.clientes}" var="cliente"
 					rows="5" paginatorPosition="bottom">
@@ -27,7 +27,7 @@
 						</p:commandButton>
 					</f:facet>
 
-					<p:column headerText="Nome" filterBy="#{cliente.nomeFantasia}"
+					<p:column headerText="Nome fantasia" filterBy="#{cliente.nomeFantasia}"
 						sortBy="#{cliente.nomeFantasia}" filterMatchMode="contains">
 						<div align="center">
 							<h:outputText value="#{cliente.nomeFantasia}" />
@@ -54,25 +54,29 @@
 						<div align="center">
 							<p:commandButton icon="ui-icon-trash"
 								actionListener="#{clienteBean.excluir}"
-								update=":mensagem :formListagem:tabela">
+								update=":mensagem :formListagem:tabela"
+								title="exluir">
 								<p:confirm header="Confirmação"
-									message="Deseja realmente excluir o registro |#{cliente.nomeFantasia}| ?" />
+									message=" ***Atenção*** Se o cliente está vinculado à um registro de ensaio, ele não será excluido.
+									Deseja continuar?" />
 								<f:attribute name="clienteSelecionado" value="#{cliente}" />
 							</p:commandButton>
 
 							<p:commandButton icon="ui-icon-pencil"
 								actionListener="#{clienteBean.editar}"
-								oncomplete="PF('dialogo').show();"
-								update=":mensagem :formCadastro:painel">
+								oncomplete="PF('dialogoAlterar').show();"
+								update=":mensagem :formAlterar:painel"
+								title="editar">
 								<f:attribute name="clienteSelecionado" value="#{cliente}" />
 								<f:actionListener
 									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
 							</p:commandButton>
-							
+
 							<p:commandButton icon="ui-icon-search"
 								actionListener="#{clienteBean.mostrarDetalhes}"
 								oncomplete="PF('dialogoDetalhes').show();"
-								update=":formDetalhes:painel">
+								update=":formDetalhes:painel"
+								title="detalhes">
 								<f:attribute name="clienteSelecionado" value="#{cliente}" />
 								<f:actionListener
 									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener" />
@@ -94,11 +98,12 @@
 		<p:dialog header="Cadastro de Clientes" widgetVar="dialogo"
 			draggable="false" resizable="false" modal="true" closable="false">
 			<h:form id="formCadastro">
-				<h:panelGrid id="painel" columns="2">
-					<p:outputLabel for="nome" value="Nome Fantasia:" />
+				
+				<p:panelGrid id="painel" columns="2">
+					<p:outputLabel for="nome" value="Nome fantasia:" />
 					<p:inputText id="nome" maxlength="50" size="30"
 						value="#{clienteBean.cliente.nomeFantasia}" required="true"
-						requiredMessage="O campo 'Nome Fantasia' é obrigatório" />
+						requiredMessage="O campo 'Nome fantasia' é obrigatório" />
 
 					<p:outputLabel for="cnpj" value="CNPJ:" />
 					<p:inputMask id="cnpj" maxlength="20" size="30"
@@ -120,12 +125,12 @@
 						value="#{clienteBean.cliente.cep}" required="true"
 						requiredMessage="O campo 'CEP' é obrigatório" />
 
-					<p:outputLabel for="telFixo" value="Telefone Fixo:" />
+					<p:outputLabel for="telFixo" value="Telefone fixo:" />
 					<p:inputMask id="telFixo" mask="(99) 9999-9999" maxlength="50"
 						size="30" value="#{clienteBean.cliente.telefoneFixo}"
-						required="true" requiredMessage="O campo 'Telefone' é obrigatório" />
+						required="true" requiredMessage="O campo 'Telefone fixo' é obrigatório" />
 
-					<p:outputLabel for="cel" value="Telefone Móvel:" />
+					<p:outputLabel for="cel" value="Telefone móvel:" />
 					<p:inputMask id="cel" mask="(99) 99999-9999" maxlength="50"
 						size="30" value="#{clienteBean.cliente.telefoneMovel}" />
 
@@ -159,7 +164,7 @@
 							itemLabel="#{cidade.nome} - #{cidade.estado.sigla}" />
 					</p:selectOneMenu>
 
-				</h:panelGrid>
+				</p:panelGrid>
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar"
 						actionListener="#{clienteBean.salvar}"
@@ -167,17 +172,102 @@
 					<p:commandButton value="Cancelar"
 						oncomplete="PF('dialogo').hide();" />
 				</h:panelGrid>
-				
-				
+
+
 
 			</h:form>
 		</p:dialog>
 		
+		<p:dialog header="Alterar Cliente" widgetVar="dialogoAlterar"
+			draggable="false" resizable="false" modal="true" closable="false">
+			<h:form id="formAlterar">
+				<p:panel>
+					<h3 align="center">***Atenção***</h3>
+					<p>Ao alterar o registro de um cliente, tenha em mente que a alteração</p>
+					<p>irá refletir nos registros de ensaios que estão vinculados ao cliente.</p>
+				</p:panel>
+				<p:panelGrid id="painel" columns="2">
+					<p:outputLabel for="nome" value="Nome fantasia:" />
+					<p:inputText id="nome" maxlength="50" size="30"
+						value="#{clienteBean.cliente.nomeFantasia}" required="true"
+						requiredMessage="O campo 'Nome fantasia' é obrigatório" />
+
+					<p:outputLabel for="cnpj" value="CNPJ:" />
+					<p:inputMask id="cnpj" maxlength="20" size="30"
+						value="#{clienteBean.cliente.cnpj}" mask="99.999.999/9999.99"
+						required="true" requiredMessage="O campo 'CNPJ' é obrigatório" />
+
+					<p:outputLabel for="endereco" value="Endereço:" />
+					<p:inputText id="endereco" maxlength="60" size="50"
+						value="#{clienteBean.cliente.endereco}" required="true"
+						requiredMessage="O campo 'Endereço' é obrigatório" />
+
+					<p:outputLabel for="bairro" value="Bairro" />
+					<p:inputText id="bairro" maxlength="50" size="30"
+						value="#{clienteBean.cliente.bairro}" required="true"
+						requiredMessage="O campo 'Bairro' é obrigatório" />
+
+					<p:outputLabel for="cep" value="CEP:" />
+					<p:inputMask id="cep" mask="99.999-999" maxlength="15" size="30"
+						value="#{clienteBean.cliente.cep}" required="true"
+						requiredMessage="O campo 'CEP' é obrigatório" />
+
+					<p:outputLabel for="telFixo" value="Telefone fixo:" />
+					<p:inputMask id="telFixo" mask="(99) 9999-9999" maxlength="50"
+						size="30" value="#{clienteBean.cliente.telefoneFixo}"
+						required="true" requiredMessage="O campo 'Telefone fixo' é obrigatório" />
+
+					<p:outputLabel for="cel" value="Telefone móvel:" />
+					<p:inputMask id="cel" mask="(99) 99999-9999" maxlength="50"
+						size="30" value="#{clienteBean.cliente.telefoneMovel}" />
+
+					<p:outputLabel for="email" value="E-mail:" />
+					<p:inputText id="email" maxlength="50" size="30"
+						value="#{clienteBean.cliente.email}" required="true"
+						requiredMessage="O campo 'E-mail' é obrigatório" />
+
+					<p:outputLabel for="estado" value="Estado:" />
+					<p:selectOneMenu id="estado" filter="true"
+						filterMatchMode="contains"
+						converter="omnifaces.SelectItemsConverter"
+						value="#{clienteBean.estado}">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione um estado" />
+						<f:selectItems value="#{clienteBean.estados}" var="estado"
+							itemValue="#{estado}" itemLabel="#{estado.nome}" />
+						<p:ajax listener="#{clienteBean.popular()}"
+							update=":formCadastro:cidade" />
+					</p:selectOneMenu>
+
+					<p:outputLabel for="cidade" value="Cidade:" />
+					<p:selectOneMenu id="cidade" filter="true"
+						filterMatchMode="contains" value="#{clienteBean.cliente.cidade}"
+						converter="omnifaces.SelectItemsConverter" required="true"
+						requiredMessage="O campo 'Cidade' é obrigatório">
+						<f:selectItem noSelectionOption="true"
+							itemLabel="Selecione uma cidade" />
+						<f:selectItems value="#{clienteBean.cidades}" var="cidade"
+							itemValue="#{cidade}"
+							itemLabel="#{cidade.nome} - #{cidade.estado.sigla}" />
+					</p:selectOneMenu>
+
+				</p:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Salvar"
+						actionListener="#{clienteBean.salvar}"
+						update=":mensagem :formAlterar:painel :formListagem:tabela" />
+					<p:commandButton value="Cancelar"
+						oncomplete="PF('dialogoAlterar').hide();" />
+				</h:panelGrid>
+				<br />
+			</h:form>
+		</p:dialog>
+
 		<p:dialog header="Detalhes do Cliente" widgetVar="dialogoDetalhes"
 			draggable="false" resizable="false" modal="true" closable="false">
 			<h:form id="formDetalhes">
 				<p:panelGrid id="painel" columns="2">
-					<p:outputLabel value="Nome Fantasia:" />
+					<p:outputLabel value="Nome fantasia:" />
 					<h:outputText value="#{clienteBean.cliente.nomeFantasia}" />
 
 					<p:outputLabel value="CNPJ:" />
@@ -192,17 +282,18 @@
 					<p:outputLabel value="CEP:" />
 					<h:outputText value="#{clienteBean.cliente.cep}" />
 
-					<p:outputLabel value="Telefone Fixo:" />
+					<p:outputLabel value="Telefone fixo:" />
 					<h:outputText value="#{clienteBean.cliente.telefoneFixo}" />
 
-					<p:outputLabel value="Telefone Móvel:" />
+					<p:outputLabel value="Telefone móvel:" />
 					<h:outputText value="#{clienteBean.cliente.telefoneMovel}" />
 
 					<p:outputLabel value="E-mail:" />
 					<h:outputText value="#{clienteBean.cliente.email}" />
 
 					<p:outputLabel value="Cidade:" />
-					<h:outputText value="#{clienteBean.cliente.cidade.nome}-#{clienteBean.cliente.cidade.estado.sigla}" />
+					<h:outputText
+						value="#{clienteBean.cliente.cidade.nome}-#{clienteBean.cliente.cidade.estado.sigla}" />
 
 				</p:panelGrid>
 				<h:panelGrid columns="2">

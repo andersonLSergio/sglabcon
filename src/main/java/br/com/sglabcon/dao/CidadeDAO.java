@@ -28,4 +28,21 @@ public class CidadeDAO extends GenericDAO<Cidade>{
 			sessao.close();
 		}
 	}
+	
+	@SuppressWarnings("deprecation")
+	public Cidade buscarPorNome(String nome) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		
+		try {
+			Criteria consulta = sessao.createCriteria(Cidade.class);
+			consulta.add(Restrictions.eq("nome", nome));
+			Cidade resultado = (Cidade) consulta.uniqueResult();
+			return resultado;
+			
+		} catch (RuntimeException erro) {
+			throw erro;
+		} finally {
+			sessao.close();
+		}
+	}
 }

@@ -59,6 +59,8 @@ public class DimensaoBasicaCilindricoBean {
 			DimensaoBasicaCilindricoDAO dimensaoBasicaCilindricoDAO = new DimensaoBasicaCilindricoDAO();
 			dimensaoBasicaCilindricoDAO.excluir(dimensaoBasica);
 			
+			Messages.addGlobalInfo("Registro excluído com sucesso");
+			
 			listar();
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Houve um erro ao excluir.");

@@ -5,8 +5,8 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import br.com.sglabcon.util.HibernateUtil;
 import br.com.sglabcon.domain.Usuario;
+import br.com.sglabcon.util.HibernateUtil;
 
 public class UsuarioDAO extends GenericDAO<Usuario>{
 
@@ -25,6 +25,23 @@ public class UsuarioDAO extends GenericDAO<Usuario>{
 			Usuario resultado = (Usuario) consulta.uniqueResult();
 			
 			return resultado;
+		} catch (RuntimeException erro) {
+			throw erro;
+		} finally {
+			sessao.close();
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	public Usuario buscarPorUsername(String username) {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		
+		try {
+			Criteria consulta = sessao.createCriteria(Usuario.class);
+			consulta.add(Restrictions.eq("username", username));
+			Usuario resultado = (Usuario) consulta.uniqueResult();
+			return resultado;
+			
 		} catch (RuntimeException erro) {
 			throw erro;
 		} finally {

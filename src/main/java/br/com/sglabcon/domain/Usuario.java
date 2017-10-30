@@ -22,6 +22,9 @@ public class Usuario extends GenericDomain {
 	
 	@Transient
 	private String senhaConfirmacao;
+	
+	@Transient
+	private String senhaAntiga;
 
 	@Column(length = 35, nullable = false)
 	private String email;
@@ -100,6 +103,14 @@ public class Usuario extends GenericDomain {
 	
 	public void setSenhaConfirmacao(String senhaConfirmacao) {
 		this.senhaConfirmacao = senhaConfirmacao;
+	}
+	
+	public String getSenhaAntiga() {
+		return senhaAntiga;
+	}
+	
+	public void setSenhaAntiga(String senhaAntiga) {
+		this.senhaAntiga = senhaAntiga;
 	}
 
 	public String getEmail() {

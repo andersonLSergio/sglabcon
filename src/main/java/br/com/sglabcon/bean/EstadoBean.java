@@ -17,8 +17,9 @@ import br.com.sglabcon.domain.Estado;
 @ViewScoped
 public class EstadoBean {
 	private Estado estado;
+	private Estado localEstado;
 	private List<Estado> estados;
-	
+
 	@PostConstruct
 	public void listar() {
 		try {
@@ -41,29 +42,30 @@ public class EstadoBean {
 			Messages.addGlobalInfo("Estado " + estado.getNome() + " foi salvo com sucesso");
 			novo();
 			listar();
+
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao salvar");
 			erro.printStackTrace();
 		}
 	}
-	
+
 	public void excluir(ActionEvent evento) {
 		try {
 			estado = (Estado) evento.getComponent().getAttributes().get("estadoSelecionado");
 			EstadoDAO estadoDAO = new EstadoDAO();
 			estadoDAO.excluir(estado);
-			
-			Messages.addGlobalInfo("Registro "+ estado.getNome() + " excluído com sucesso");
+
+			Messages.addGlobalInfo("Registro " + estado.getNome() + " excluído com sucesso");
 			listar();
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao excluir");
 			erro.printStackTrace();
 		}
 	}
-	
+
 	public void editar(ActionEvent evento) {
 		estado = (Estado) evento.getComponent().getAttributes().get("estadoSelecionado");
-		
+
 	}
 
 	public Estado getEstado() {
@@ -73,11 +75,19 @@ public class EstadoBean {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
-	
+
+	public Estado getLocalEstado() {
+		return localEstado;
+	}
+
+	public void setLocalEstado(Estado localEstado) {
+		this.localEstado = localEstado;
+	}
+
 	public List<Estado> getEstados() {
 		return estados;
 	}
-	
+
 	public void setEstados(List<Estado> estados) {
 		this.estados = estados;
 	}

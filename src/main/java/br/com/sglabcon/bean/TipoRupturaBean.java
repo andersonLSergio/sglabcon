@@ -34,7 +34,6 @@ public class TipoRupturaBean extends GenericBean{
 	
 	public void novo() {
 		tipoRuptura = new TipoRuptura();
-		System.out.println("Novo+++");
 	}
 	
 	public void salvar() {

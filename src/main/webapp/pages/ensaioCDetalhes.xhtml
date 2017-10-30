@@ -23,7 +23,7 @@
 					<p:outputLabel value="Codigo:" />
 					<h:outputText value="#{ensaioCilindricoBean.ensaioDetalhe.codigo}" />
 
-					<p:outputLabel value="Data de Moldagem:" />
+					<p:outputLabel value="Data de moldagem:" />
 					<h:outputText
 						value="#{ensaioCilindricoBean.ensaioDetalhe.dataAddAgua}">
 						<f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
@@ -33,16 +33,16 @@
 					<h:outputText
 						value="#{ensaioCilindricoBean.ensaioDetalhe.idade} dias" />
 
-					<p:outputLabel value="Classe de Máquina:" />
+					<p:outputLabel value="Classe de máquina:" />
 					<h:outputText
 						value="#{ensaioCilindricoBean.ensaioDetalhe.classeMaquina}" />
 
 					<p:outputLabel value="Lote:" />
 					<h:outputText value="#{ensaioCilindricoBean.ensaioDetalhe.lote}" />
 
-					<p:outputLabel value="Resistência de Projeto:" />
+					<p:outputLabel value="Resistência de projeto:" />
 					<h:outputText
-						value="#{ensaioCilindricoBean.ensaioDetalhe.resistenciaProjeto}">
+						value="#{ensaioCilindricoBean.ensaioDetalhe.resistenciaProjeto} MPa">
 						<f:convertNumber locale="pt-BR" />
 					</h:outputText>
 
@@ -50,7 +50,7 @@
 					<h:outputText
 						value="#{ensaioCilindricoBean.ensaioDetalhe.qtdAmostras}" />
 
-					<p:outputLabel value="Dimensão Básica (d) mm:" />
+					<p:outputLabel value="Dimensão básica (d) mm:" />
 					<h:outputText
 						value="#{ensaioCilindricoBean.ensaioDetalhe.dimensaoBasica}">
 						<f:convertNumber locale="pt-BR" />
@@ -81,9 +81,9 @@
 					<p:panelGrid columns="2" style="width:100%"
 						columnClasses="label,value">
 
-						<h:outputLabel value="Codigo da Amostra:" />
+						<h:outputLabel value="Codigo da amostra:" />
 						<h:outputText value="#{amostra.codigo}" />
-						<h:outputLabel value="Indentificação da Amostra:" />
+						<h:outputLabel value="Indentificação da amostra:" />
 						<h:outputText value="#{amostra.identificacao}" />
 						<h:outputLabel value="Realizado por:" />
 						<h:outputText value="#{amostra.usuario.nomeCompleto}" />
@@ -95,19 +95,19 @@
 						<h:outputText value="#{amostra.relacaoHD}">
 							<f:convertNumber locale="pt-BR" />
 						</h:outputText>
-						<h:outputLabel value="Fator de Correção:" />
+						<h:outputLabel value="Fator de correção:" />
 						<h:outputText value="#{amostra.fatorCorrecao}">
 							<f:convertNumber locale="pt-BR" />
 						</h:outputText>
-						<h:outputLabel value="Força Aplicada (kN):" />
-						<h:outputText value="#{amostra.forcaAplicada}">
+						<h:outputLabel value="Força aplicada:" />
+						<h:outputText value="#{amostra.forcaAplicada} N">
 							<f:convertNumber locale="pt-BR" />
 						</h:outputText>
-						<p:outputLabel value="Conversão Força aplicada (MPa):" />
-						<h:outputText value="#{amostra.conversaoFA}">
+						<p:outputLabel value="Resistência à compressão:" />
+						<h:outputText value="#{amostra.conversaoFA} MPa">
 							<f:convertNumber locale="pt-BR" />
 						</h:outputText>
-						<h:outputLabel value="Tipo de Ruptura:"
+						<h:outputLabel value="Tipo de ruptura:"
 							rendered="#{ensaioCilindricoBean.tipoRupturaIsDefined(amostra)}" />
 						<h:outputText
 							value="#{amostra.tipoRuptura}"
@@ -149,42 +149,42 @@
 						value="#{autenticacaoBean.usuarioLogado.nomeCompleto}" />
 
 					<p:outputLabel for="identificacao"
-						value="Indentificação da Amostra" />
+						value="Indentificação da amostra" />
 					<p:inputText id="identificacao" maxlength="50" size="30"
 						value="#{ensaioCilindricoBean.amostra.identificacao}" />
 
-					<p:outputLabel for="forcaAplicada" value="Força Aplicada (N)" />
+					<p:outputLabel for="forcaAplicada" value="Força aplicada (N)" />
 					<p:inputNumber id="forcaAplicada" maxlength="50" size="30"
 						value="#{ensaioCilindricoBean.amostra.forcaAplicada}"
 						thousandSeparator="." decimalSeparator="," required="true"
-						requiredMessage="O campo 'Força Aplicada' é obrigatório">
+						requiredMessage="O campo 'Força aplicada' é obrigatório">
 						<p:ajax listener="#{ensaioCilindricoBean.calcularAmostra()}"
 							update=":formCadastro:conversaoFA :formCadastro:status"
 							event="keyup" />
 					</p:inputNumber>
 
-					<p:outputLabel for="altura" value="Altura Real (mm)" />
+					<p:outputLabel for="altura" value="Altura real (mm)" />
 					<p:inputNumber id="altura"
 						value="#{ensaioCilindricoBean.amostra.alturaReal}"
 						thousandSeparator="." decimalSeparator="," required="true"
-						requiredMessage="O campo 'Altura Real' é obrigatório">
+						requiredMessage="O campo 'Altura real' é obrigatório">
 						<p:ajax listener="#{ensaioCilindricoBean.calcularAmostra()}"
 							update=":formCadastro:conversaoFA :formCadastro:relacaohd :formCadastro:fator :formCadastro:status"
 							event="keyup" />
 					</p:inputNumber>
 
-					<p:outputLabel for="diametro" value="Diâmetro Real (mm)" />
+					<p:outputLabel for="diametro" value="Diâmetro real (mm)" />
 					<p:inputNumber id="diametro"
 						value="#{ensaioCilindricoBean.amostra.diametroReal}"
 						thousandSeparator="." decimalSeparator="," required="true"
-						requiredMessage="O campo 'Diâmetro Real' é obrigatório">
+						requiredMessage="O campo 'Diâmetro real' é obrigatório">
 						<p:ajax listener="#{ensaioCilindricoBean.calcularAmostra()}"
 							update=":formCadastro:conversaoFA :formCadastro:relacaohd :formCadastro:fator :formCadastro:status"
 							event="keyup" />
 					</p:inputNumber>
 
 					<p:outputLabel for="conversaoFA"
-						value="Resistência a Compressão (MPa)" />
+						value="Resistência a compressão (MPa)" />
 					<h:outputText id="conversaoFA"
 						value="#{ensaioCilindricoBean.amostra.conversaoFA}">
 						<f:convertNumber locale="pt-BR" />
@@ -196,7 +196,7 @@
 						<f:convertNumber locale="pt-BR" />
 					</h:outputText>
 
-					<h:outputLabel for="fator" value="Fator 'p':" />
+					<h:outputLabel for="fator" value="Fator de correção:" />
 					<h:outputText id="fator"
 						value="#{ensaioCilindricoBean.amostra.fatorCorrecao}">
 						<f:convertNumber locale="pt-BR" />
@@ -207,7 +207,7 @@
 						style="color:#{ensaioCilindricoBean.alterarCorStatus()}"
 						value="#{ensaioCilindricoBean.amostra.statusFormatado}" />
 
-					<p:outputLabel for="tRuptura" value="Tipo de Ruptura:" />
+					<p:outputLabel for="tRuptura" value="Tipo de ruptura:" />
 					<p:selectOneMenu id="tRuptura" filter="true"
 						filterMatchMode="contains"
 						value="#{ensaioCilindricoBean.amostra.tipoRupturaObj}"

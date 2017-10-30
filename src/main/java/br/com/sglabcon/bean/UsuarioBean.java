@@ -21,6 +21,7 @@ import br.com.sglabcon.domain.Usuario;
 public class UsuarioBean implements Serializable {
 
 	private Usuario usuario;
+	private Usuario localUser;
 	private boolean isMinhaConta = false;
 
 	private List<Usuario> usuarios;
@@ -58,24 +59,28 @@ public class UsuarioBean implements Serializable {
 
 	public void salvar() {
 		try {
-
-			// Se a senha foi digitada, então é um usuário novo
-			// caso contrário, significa que se trata de uma edição
-			// onde a senha não é digitada, portanto: nula
-			if (usuario.getSenhaSemCriptografia() != null) {
-				System.out.println("Senha sem criptografia digitada");
-				SimpleHash hash = new SimpleHash("md5", usuario.getSenhaSemCriptografia());
-				usuario.setSenha(hash.toHex());
-				Messages.addGlobalInfo("Usuário cadastrado com sucesso");
+			
+			//Se o usuário digitado já existe e não se trata de uma edição, não pode cadastrar!
+			if(usernameExists(usuario.getUsername()) && usuario.getSenhaSemCriptografia() != null) {
+				Messages.addFlashGlobalError("Usuário já cadastrado no sistema");
 			} else {
-				Messages.addGlobalInfo("Usuário alterado com sucesso");
+				// Se a senha foi digitada, então é um usuário novo
+				// caso contrário, significa que se trata de uma edição
+				// onde a senha não é digitada, portanto: nula
+				if (usuario.getSenhaSemCriptografia() != null) {
+					System.out.println("Senha sem criptografia digitada");
+					SimpleHash hash = new SimpleHash("md5", usuario.getSenhaSemCriptografia());
+					usuario.setSenha(hash.toHex());
+					Messages.addGlobalInfo("Usuário cadastrado com sucesso");
+				} else {
+					Messages.addGlobalInfo("Usuário alterado com sucesso");
+				}
+				UsuarioDAO usuarioDAO = new UsuarioDAO();
+				usuarioDAO.merge(usuario);				
+				novo();
+				listar();
 			}
 
-			UsuarioDAO usuarioDAO = new UsuarioDAO();
-			usuarioDAO.merge(usuario);
-
-			novo();
-			listar();
 
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao salvar usuário");
@@ -85,22 +90,27 @@ public class UsuarioBean implements Serializable {
 
 	public void alterarSenha() {
 		try {
+			UsuarioDAO usuarioDAO = new UsuarioDAO();
 			
-			System.out.println("É página Minha conta: "+ isMinhaConta);
-			System.out.println("senha sem cripto: "+ usuario.getSenhaSemCriptografia());
-			System.out.println("senha confirmacao: "+ usuario.getSenhaConfirmacao());
+			//Checa se a senha antiga coincide com a senha de autenticação deste usuário
+			//Se coincidir, o localUser é preenchido, se não é null
+			if(isMinhaConta) {
+				localUser = usuarioDAO.autenticar(usuario.getUsername(), usuario.getSenhaAntiga());				
+			}
 			
-			//se as senhas coincidem ou não é a página minhaconta.xhtml
-			if (usuario.getSenhaSemCriptografia().equals(usuario.getSenhaConfirmacao()) || !isMinhaConta) {
+			//se o localUser está preenchido ou não é a página minhaconta.xhtml
+			//A senha pode ser alterada
+			if (localUser != null || !isMinhaConta) {
 				SimpleHash hash = new SimpleHash("md5", usuario.getSenhaSemCriptografia());
 				usuario.setSenha(hash.toHex());
 				Messages.addGlobalInfo("Senha alterada com sucesso");
 
-				UsuarioDAO usuarioDAO = new UsuarioDAO();
 				usuarioDAO.merge(usuario);
 
-			} else {
-				Messages.addFlashGlobalError("As senhas não coincidem. Tente novamente");
+				//Se o localUser não foi preenchido e está na tela minhaConta
+				//Então a senha antiga está incorreta
+			} else if(localUser == null) {
+				Messages.addFlashGlobalError("Senha antiga incorreta");
 			}
 
 		} catch (RuntimeException erro) {
@@ -120,6 +130,19 @@ public class UsuarioBean implements Serializable {
 			Messages.addGlobalError("Ocorreu um erro ao excluir usuário");
 			erro.printStackTrace();
 		}
+	}
+	
+	
+	//Este método verifica se o username já foi cadastrado no banco
+	public boolean usernameExists(String username) {
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		localUser = usuarioDAO.buscarPorUsername(username);
+		
+		if (localUser != null) {
+			localUser = null;
+			return true;
+		}		
+		return false;
 	}
 
 	public void editar(ActionEvent evento) {

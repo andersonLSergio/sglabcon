@@ -11,6 +11,7 @@ import br.com.sglabcon.domain.Usuario;
 public class UsuarioDAOTest {
 	
 	@Test
+	@Ignore
 	public void autenticar() {
 		String username = "anderson";
 		String senha = "anderson123";
@@ -23,6 +24,22 @@ public class UsuarioDAOTest {
 			System.out.println("Código do usuário: "+ usuario.getCodigo());
 		} else {
 			System.out.println("Falha na autenticação");
+		}
+	}
+	
+	@Test
+	@Ignore
+	public void buscarPorUsername() {
+		String username = "anderson2";
+		
+		UsuarioDAO usuarioDAO = new UsuarioDAO();
+		Usuario usuario = usuarioDAO.buscarPorUsername(username);
+		
+		if(usuario != null) {
+			System.out.println("Usuário '"+ usuario.getUsername() + "' encontrado!");
+			System.out.println("Código do usuário: "+ usuario.getCodigo());
+		} else {
+			System.out.println("Nenhum resultado");
 		}
 	}
 

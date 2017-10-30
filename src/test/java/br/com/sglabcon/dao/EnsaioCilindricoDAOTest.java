@@ -30,10 +30,10 @@ public class EnsaioCilindricoDAOTest {
 		
 		ensaioCilindrico.setDataAddAgua(new Date());
 		ensaioCilindrico.setLote("13sa1das");
-		ensaioCilindrico.setClasseMaquina(classeMaquina);
+		ensaioCilindrico.setClasseMaquina(classeMaquina.getClasse());
 		ensaioCilindrico.setQtdAmostras(13);
 		ensaioCilindrico.setObservacoes("Excluirrr");
-		ensaioCilindrico.setDimensaoBasica(dimensaoBasica);
+		ensaioCilindrico.setDimensaoBasica(dimensaoBasica.getDimensaoBasica());
 		ensaioCilindrico.setCapeamento("Capeamento com Enxofre");
 		ensaioCilindrico.setResistenciaProjeto(70.5);
 		ensaioCilindrico.setIdade(new Short("7"));

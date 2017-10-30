@@ -13,7 +13,7 @@
 
 	<ui:define name="conteudo">
 		<h:form id="formListagem">
-			<p:panel header="Usários - Listagem">
+			<p:panel header="Usuários - Listagem">
 				<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
 					paginator="true" value="#{usuarioBean.usuarios}" var="usuario"
 					rows="5" paginatorPosition="bottom">
@@ -33,7 +33,7 @@
 						</div>
 					</p:column>
 
-					<p:column headerText="Nome Completo"
+					<p:column headerText="Nome completo"
 						filterBy="#{usuario.nomeCompleto}" filterMatchMode="contains"
 						sortBy="#{usuario.nomeCompleto}">
 						<div align="center">
@@ -61,7 +61,8 @@
 								actionListener="#{usuarioBean.excluir}"
 								update=":mensagem :formListagem:tabela">
 								<p:confirm header="Confirmação"
-									message="Deseja realmente excluir o registro |#{usuario.username}| ?" />
+									message=" ***Atenção*** Se o usuário está vinculado à um registro de ensaio, ele não será excluído.
+									Deseja continuar?" />
 								<f:attribute name="usuarioSelecionado" value="#{usuario}" />
 							</p:commandButton>
 							<p:commandButton icon="ui-icon-pencil" title="Editar"
@@ -97,12 +98,12 @@
 		<p:dialog header="Usuários - Cadastro" widgetVar="dialogo"
 			draggable="false" resizable="false" modal="true" closable="false">
 			<h:form id="formCadastro">
-				<h:panelGrid id="painel" columns="2">
+				<p:panelGrid id="painel" columns="2">
 
-					<p:outputLabel for="nome" value="Nome Completo:" />
+					<p:outputLabel for="nome" value="Nome completo:" />
 					<p:inputText id="nome" value="#{usuarioBean.usuario.nomeCompleto}"
 						maxlength="25" size="30" required="true"
-						requiredMessage="O campo 'Nome' é obrigatório" />
+						requiredMessage="O campo 'Nome completo' é obrigatório" />
 
 					<p:outputLabel for="username" value="Usuário:" />
 					<p:inputText id="username" value="#{usuarioBean.usuario.username}"
@@ -130,7 +131,7 @@
 					<p:selectBooleanCheckbox id="ativo"
 						value="#{usuarioBean.usuario.ativo}" />
 
-				</h:panelGrid>
+				</p:panelGrid>
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar"
 						actionListener="#{usuarioBean.salvar}"
@@ -147,12 +148,17 @@
 			widgetVar="dialogoEditarUsuario" draggable="false" resizable="false"
 			modal="true" closable="false">
 			<h:form id="formEditarUsuario">
-				<h:panelGrid id="painel" columns="2">
+				<p:panel>
+					<h3 align="center">***Atenção***</h3>
+					<p>Ao alterar o registro de um usuário, tenha em mente que a alteração</p>
+					<p>irá refletir nos registros de ensaios que estão vinculados ao usuário.</p>
+				</p:panel>
+				<p:panelGrid id="painel" columns="2">
 
-					<p:outputLabel for="nome" value="Nome Completo:" />
+					<p:outputLabel for="nome" value="Nome completo:" />
 					<p:inputText id="nome" value="#{usuarioBean.usuario.nomeCompleto}"
 						maxlength="25" size="30" required="true"
-						requiredMessage="O campo 'Nome' é obrigatório" />
+						requiredMessage="O campo 'Nome completo' é obrigatório" />
 
 					<p:outputLabel for="username" value="Usuário:" />
 					<p:inputText id="username" value="#{usuarioBean.usuario.username}"
@@ -175,7 +181,7 @@
 					<p:selectBooleanCheckbox id="ativo"
 						value="#{usuarioBean.usuario.ativo}" />
 
-				</h:panelGrid>
+				</p:panelGrid>
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar"
 						actionListener="#{usuarioBean.salvar}"
@@ -184,6 +190,7 @@
 					<p:commandButton value="Cancelar"
 						oncomplete="PF('dialogoEditarUsuario').hide();" />
 				</h:panelGrid>
+				<br />
 			</h:form>
 
 		</p:dialog>

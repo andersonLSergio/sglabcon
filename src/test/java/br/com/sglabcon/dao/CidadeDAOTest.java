@@ -55,6 +55,20 @@ public class CidadeDAOTest {
 		System.out.println("Nome do Estado: " + cidade.getEstado().getNome() + " - " + cidade.getEstado().getSigla());
 	}
 	
+
+	@Test
+	@Ignore
+	public void buscarPorNome() {
+		String nomeCidade = "Rio Azul";
+		
+		CidadeDAO cidadeDAO = new CidadeDAO();
+		Cidade cidade = cidadeDAO.buscarPorNome(nomeCidade);
+
+		System.out.println("Código: " + cidade.getCodigo());
+		System.out.println("Nome: " + cidade.getNome());
+		System.out.println("Nome do Estado: " + cidade.getEstado().getNome() + " - " + cidade.getEstado().getSigla());
+	}
+	
 	@Test
 	@Ignore
 	public void excluir() {
