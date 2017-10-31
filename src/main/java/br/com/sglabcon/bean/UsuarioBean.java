@@ -68,7 +68,6 @@ public class UsuarioBean implements Serializable {
 				// caso contrário, significa que se trata de uma edição
 				// onde a senha não é digitada, portanto: nula
 				if (usuario.getSenhaSemCriptografia() != null) {
-					System.out.println("Senha sem criptografia digitada");
 					SimpleHash hash = new SimpleHash("md5", usuario.getSenhaSemCriptografia());
 					usuario.setSenha(hash.toHex());
 					Messages.addGlobalInfo("Usuário cadastrado com sucesso");

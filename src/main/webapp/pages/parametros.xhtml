@@ -76,7 +76,7 @@
 
 										<p:column headerText="Imagem" style="width:100px;">
 											<div align="center">
-												<p:graphicImage library="img" styleClass="imgTipoRuptura"
+												<p:graphicImage library="tiposRupturaImg" styleClass="imgTipoRuptura"
 													name="#{tRuptura.imgUrl}" alt="Tipo de Ruptura" />
 											</div>
 										</p:column>
@@ -109,8 +109,8 @@
 								<p:panel header="Dimensões Básicas">
 									<p:dataTable id="tabelaDBCilindrico" style="width:380px;"
 										emptyMessage="Nenhum registro encontrado." paginator="true"
-										value="#{dBasicaCilindrico.dimensoes}" var="dimensao" rows="10"
-										paginatorPosition="bottom">
+										value="#{dBasicaCilindrico.dimensoes}" var="dimensao"
+										rows="10" paginatorPosition="bottom">
 										<f:facet name="header">
 											<p:commandButton value="Novo"
 												oncomplete="PF('dialogoDBCilindrico').show();"
@@ -168,14 +168,14 @@
 					</center>
 				</p:tab>
 
-				
+
 				<p:tab id="tabMaquinas" title="Máquinas de Compressão">
 					<center>
 						<p:panel header="Classes de Máquinas - Listagem">
 							<p:dataTable id="tabelaMaquinas"
 								emptyMessage="Nenhum registro encontrado." paginator="true"
-								value="#{classeMaquinaBean.classes}"
-								var="classeSelecionada" rows="5" paginatorPosition="bottom">
+								value="#{classeMaquinaBean.classes}" var="classeSelecionada"
+								rows="5" paginatorPosition="bottom">
 								<f:facet name="header">
 									<p:commandButton value="Novo"
 										oncomplete="PF('dialogoMaquinas').show();"
@@ -188,8 +188,7 @@
 
 								<p:column headerText="Código"
 									filterBy="#{classeSelecionada.codigo}"
-									sortBy="#{classeSelecionada.codigo}"
-									filterMatchMode="contains">
+									sortBy="#{classeSelecionada.codigo}" filterMatchMode="contains">
 									<div align="center">
 										<h:outputText value="#{classeSelecionada.codigo}" />
 									</div>
@@ -197,8 +196,7 @@
 
 								<p:column headerText="Classe de Máquina"
 									filterBy="#{classeSelecionada.classe}"
-									sortBy="#{classeSelecionada.classe}"
-									filterMatchMode="contains">
+									sortBy="#{classeSelecionada.classe}" filterMatchMode="contains">
 									<div align="center">
 										<h:outputText value="#{classeSelecionada.classe}" />
 									</div>
@@ -231,12 +229,20 @@
 					</center>
 				</p:tab>
 			</p:tabView>
+			
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 		</h:form>
+
 
 		<p:dialog header="Tipos de Ruptura - Cadastro"
 			widgetVar="dialogoTRuptura" draggable="false" resizable="false"
 			modal="true" closable="false">
-			<h:form id="formCadastroTRuptura">
+			<h:form id="formCadastroTRuptura" enctype="multipart/form-data">
 				<h:panelGrid id="painel" columns="2">
 					<p:outputLabel for="tipoRuptura" value="Tipo de Ruptura:" />
 					<p:inputText id="tipoRuptura" maxlength="50" size="30"
@@ -248,18 +254,17 @@
 						value="#{tipoRupturaBean.tipoRuptura.descricao}" required="true"
 						requiredMessage="O campo 'Descrição' é obrigatório" />
 
-					<p:outputLabel for="url" value="Nome da Imagem (nome.extensão):" />
-					<p:inputText id="url" maxlength="300" size="50"
-						value="#{tipoRupturaBean.tipoRuptura.imgUrl}" required="true"
-						requiredMessage="O campo 'Nome da Imagem' é obrigatório" />
-						
-					<p:outputLabel value="Imagem:" />
-					<p:fileUpload allowTypes="/(\.|\/)(jpe?g|png)$/"
+					<p:outputLabel for="imagem" value="Imagem:" />
+					<p:fileUpload id="imagem"
+						fileUploadListener="#{tipoRupturaBean.upload}" mode="advanced"
+						allowTypes="/(\.|\/)(jpe?g|png)$/"
 						invalidFileMessage="Formato de arquivo inválido"
-						label="Selecione um arquivo..."
-						auto="false" multiple="false" />
-
+						label="Selecione um arquivo..." auto="false" multiple="false"
+						update=":mensagem" />
 				</h:panelGrid>
+				<p>Formatos permitidos: <strong>png (preferível)</strong>, jpe e jpeg. </p>
+				<p>Obs.:Não esqueça de pressionar "upload" para fazer upload da
+					imagem.</p>
 				<h:panelGrid columns="2">
 					<p:commandButton value="Salvar"
 						actionListener="#{tipoRupturaBean.salvar}"
@@ -291,7 +296,7 @@
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
-		
+
 		<p:dialog header="Classe de Máquina - Cadastro"
 			widgetVar="dialogoMaquinas" draggable="false" resizable="false"
 			modal="true" closable="false">

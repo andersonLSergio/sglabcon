@@ -58,16 +58,23 @@ public class CidadeDAOTest {
 
 	@Test
 	@Ignore
-	public void buscarPorNome() {
-		String nomeCidade = "Rio Azul";
+	public void cidadeExists() {
+		String nomeCidade = "Irati";
+		String estadoSigla = "SC";
 		
 		CidadeDAO cidadeDAO = new CidadeDAO();
-		Cidade cidade = cidadeDAO.buscarPorNome(nomeCidade);
+		Cidade cidade = cidadeDAO.cidadeExists(nomeCidade, estadoSigla);
+		
+		if(cidade != null) {
+			System.out.println("Código: " + cidade.getCodigo());
+			System.out.println("Nome: " + cidade.getNome());
+			System.out.println("Nome do Estado: " + cidade.getEstado().getNome() + " - " + cidade.getEstado().getSigla());
+		} else {
+			System.out.println("Nenhum nenhuma cidade encontrada.");
+		}
+			
+		}
 
-		System.out.println("Código: " + cidade.getCodigo());
-		System.out.println("Nome: " + cidade.getNome());
-		System.out.println("Nome do Estado: " + cidade.getEstado().getNome() + " - " + cidade.getEstado().getSigla());
-	}
 	
 	@Test
 	@Ignore

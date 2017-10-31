@@ -73,6 +73,30 @@ public class ClienteDAOTest {
 	
 	@Test
 	@Ignore
+	public void clienteExists() {
+		String cnpj = "28.821.150/0001.84";
+		ClienteDAO clienteDAO = new ClienteDAO();
+		
+		Cliente cliente = clienteDAO.clienteExists(cnpj);
+		
+		if(cliente != null) {
+			System.out.println("CNPJ: " + cliente.getCnpj());
+			System.out.println("Nome Fantasia: " + cliente.getNomeFantasia());
+			System.out.println("Endereço: " + cliente.getEndereco());
+			System.out.println("Bairro: " + cliente.getBairro());
+			System.out.println("CEP: " + cliente.getCep());
+			System.out.println("Telefone Fixo: " + cliente.getTelefoneFixo());
+			System.out.println("Telefone Móvel: " + cliente.getTelefoneMovel());
+			System.out.println("Email: " + cliente.getEmail());
+			System.out.println(
+					"Cidade: " + cliente.getCidade().getNome() + " - " + cliente.getCidade().getEstado().getSigla());
+		} else {
+			System.out.println("Nenhum registro de cliente encontrado.");
+		}
+	}
+	
+	@Test
+	@Ignore
 	public void excluir() {
 		ClienteDAO clienteDAO = new ClienteDAO();
 		Cliente cliente = clienteDAO.buscar(3L);

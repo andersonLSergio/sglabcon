@@ -78,10 +78,10 @@ public class CidadeBean implements Serializable {
 
 	public void salvar() {
 		try {
-			if(!cidadeExists()) {
+			if (!cidadeExists()) {
 				CidadeDAO cidadeDAO = new CidadeDAO();
 				cidadeDAO.merge(cidade);
-				
+
 				novo();
 				listar();
 				Messages.addGlobalInfo("Cidade salva com sucesso");
@@ -96,14 +96,17 @@ public class CidadeBean implements Serializable {
 	}
 
 	// Método destinado a verificar se já existe uma cidade no mesmo estado no BD
+	// Ex.: É perfeitamente normal duas cidades com mesmo nome, porém em estado
+	// diferentes:
+	// Irati - PR e Irati - SC
+	// Mas não podem existir duas cidades com o mesmo nome no mesmo estado.
 	public boolean cidadeExists() {
 		try {
 			CidadeDAO cidadeDAO = new CidadeDAO();
-			localCidade = cidadeDAO.buscarPorNome(cidade.getNome());
+			localCidade = cidadeDAO.cidadeExists(cidade.getNome(), cidade.getEstado().getSigla());
 
 			if (localCidade != null) {
 				if (localCidade.getEstado().getSigla().equals(cidade.getEstado().getSigla())) {
-					System.out.println("true");
 					return true;
 				}
 			}
@@ -112,7 +115,6 @@ public class CidadeBean implements Serializable {
 			Messages.addGlobalError("Ocorreu um erro ao consultar banco de dados");
 			erro.printStackTrace();
 		}
-		System.out.println("false");
 		return false;
 	}
 
