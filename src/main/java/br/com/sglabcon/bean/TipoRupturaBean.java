@@ -22,7 +22,7 @@ import br.com.sglabcon.domain.TipoRuptura;
 @SuppressWarnings("deprecation")
 @ViewScoped
 @ManagedBean
-public class TipoRupturaBean extends GenericBean {
+public class TipoRupturaBean {
 
 	private TipoRuptura tipoRuptura;
 	private List<TipoRuptura> tiposRuptura;

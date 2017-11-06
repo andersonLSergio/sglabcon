@@ -22,12 +22,6 @@ public class GenericBean {
 		return resultado;
 	}
 	
-	//Método destinado a converter unidades de kN para Mpa
-	public Double converterKNemMpa(Double kn) {
-		Double mpa = kn * 1000;
-		return mpa;
-	}
-	
 	public void redirecionar() {
 		try {
 			Faces.redirect("./pages/principal.xhtml");
