@@ -99,12 +99,12 @@
 						<h:outputText value="#{amostra.fatorCorrecao}">
 							<f:convertNumber locale="pt-BR" />
 						</h:outputText>
-						<h:outputLabel value="Força aplicada:" />
-						<h:outputText value="#{amostra.forcaAplicada} N">
+						<h:outputLabel value="Força aplicada (N):" />
+						<h:outputText value="#{amostra.forcaAplicada}">
 							<f:convertNumber locale="pt-BR" />
 						</h:outputText>
-						<p:outputLabel value="Resistência à compressão:" />
-						<h:outputText value="#{amostra.conversaoFA} MPa">
+						<p:outputLabel value="Resistência à compressão (MPa):" />
+						<h:outputText value="#{amostra.conversaoFA}">
 							<f:convertNumber locale="pt-BR" />
 						</h:outputText>
 						<h:outputLabel value="Tipo de ruptura:"
@@ -121,8 +121,9 @@
 				<br />
 				<br />
 
-				<p:panelGrid columns="3">
+				<p:panelGrid id="painelBotoes" columns="3">
 					<p:commandButton value="Nova Amostra"
+						disabled="#{ensaioCilindricoBean.novaAmostraDisabled}"
 						actionListener="#{ensaioCilindricoBean.novaAmostra}"
 						oncomplete="PF('novaAmostraDialogo').show();"
 						update=":formCadastro">
@@ -232,7 +233,7 @@
 				<h:panelGrid columns="2">
 					<p:commandButton value="Registrar Amostra"
 						actionListener="#{ensaioCilindricoBean.salvarAmostra()}"
-						update=":mensagem :formCadastro:painel :formDetalhe:carousel" />
+						update=":mensagem :formCadastro:painel formDetalhe" />
 					<p:commandButton value="Cancelar"
 						oncomplete="PF('novaAmostraDialogo').hide();"/>
 				</h:panelGrid>

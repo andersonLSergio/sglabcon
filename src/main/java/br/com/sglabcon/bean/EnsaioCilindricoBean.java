@@ -48,6 +48,8 @@ public class EnsaioCilindricoBean extends GenericBean {
 	private ClasseMaquina classeMaquina;
 	private List<ClasseMaquina> classes;
 	
+	private boolean NovaAmostraDisabled = false;
+	
 	private DecimalFormat formatador = new DecimalFormat("#.00");
 
 	@PostConstruct
@@ -113,7 +115,11 @@ public class EnsaioCilindricoBean extends GenericBean {
 
 			buscarAmostraPorEnsaio();
 
+			checarQtdAmostras();
+
 			Faces.redirect("./pages/ensaioCDetalhes.xhtml");
+			
+			System.out.println("diabled: "+ NovaAmostraDisabled);
 
 		} catch (IOException e) {
 			Messages.addGlobalError(e.getMessage());
@@ -237,6 +243,8 @@ public class EnsaioCilindricoBean extends GenericBean {
 
 			novaAmostra();
 			buscarAmostraPorEnsaio();
+			checarQtdAmostras();
+			System.out.println("diabled: "+ NovaAmostraDisabled);
 
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Houve um erro ao registrar amostra");
@@ -284,6 +292,20 @@ public class EnsaioCilindricoBean extends GenericBean {
 			return false;
 		}
 		return true;
+	}
+	
+	public void checarQtdAmostras() {
+		System.out.println("tamanho da lista: "+ amostras.size());
+		System.out.println("qtd de amostras: "+ ensaioDetalhe.getQtdAmostras());
+		
+		if(amostras != null) {
+			if(amostras.size() >= ensaioDetalhe.getQtdAmostras()) {
+				System.out.println("deveria ser true");
+				this.NovaAmostraDisabled = true;
+			} else {
+				NovaAmostraDisabled = false;
+			}
+		}
 	}
 
 	// setters e getters
@@ -390,4 +412,14 @@ public class EnsaioCilindricoBean extends GenericBean {
 	public void setClasses(List<ClasseMaquina> classes) {
 		this.classes = classes;
 	}
+
+	public boolean getNovaAmostraDisabled() {
+		return NovaAmostraDisabled;
+	}
+
+	public void setNovaAmostraDisabled(boolean novaAmostraDisabled) {
+		NovaAmostraDisabled = novaAmostraDisabled;
+	}
+	
+	
 }
