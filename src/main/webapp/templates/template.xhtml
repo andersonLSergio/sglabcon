@@ -49,10 +49,10 @@
 
 					<p:submenu label="Cadastros"
 						rendered="#{autenticacaoBean.temPermissoes(['A'])}">
-						<p:menuitem value="Clientes" url="/pages/clientes.xhtml" />
-						<p:menuitem value="Cidades" url="/pages/cidades.xhtml" />
-						<p:menuitem value="Estados" url="/pages/estados.xhtml" />
-						<p:menuitem value="Usuários" url="/pages/usuarios.xhtml" />
+						<p:menuitem value="Clientes" url="/pages/admClientes.xhtml" />
+						<p:menuitem value="Cidades" url="/pages/admCidades.xhtml" />
+						<p:menuitem value="Estados" url="/pages/admEstados.xhtml" />
+						<p:menuitem value="Usuários" url="/pages/admUsuarios.xhtml" />
 					</p:submenu>
 
 					<p:submenu label="Ensaios">
@@ -61,7 +61,7 @@
 
 					<p:menuitem value="Parâmetros"
 						rendered="#{autenticacaoBean.temPermissoes(['A'])}"
-						url="/pages/parametros.xhtml" />
+						url="/pages/admParametros.xhtml" />
 
 					<p:menuitem value="Minha Conta" url="/pages/minhaconta.xhtml" />
 

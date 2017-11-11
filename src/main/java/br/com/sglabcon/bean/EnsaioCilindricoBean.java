@@ -171,7 +171,7 @@ public class EnsaioCilindricoBean extends GenericBean {
 			//d: diametro do corpo de prova
 			//fórmula de acordo com a norma: fc = 4F/pi * D²
 			Double f = amostra.getForcaAplicada() * amostra.getFatorCorrecao();
-			Double pi = 3.14;
+			Double pi = Math.PI;
 			Double d = amostra.getDiametroReal();
 			Double resultado = (4*f)/(pi*(d*d));
 			
@@ -201,6 +201,7 @@ public class EnsaioCilindricoBean extends GenericBean {
 		Double x2 = 2.00;
 		Double y1 = 0.87;
 		Double y2 = 1.0;
+		
 		Double resultado = y1+(y2-y1)*(x-x1)/(x2-x1);
 		
 		resultado = new Double(formatador.format(resultado));
@@ -294,6 +295,8 @@ public class EnsaioCilindricoBean extends GenericBean {
 		return true;
 	}
 	
+	//método destinado a checar se a quantidade de amostras
+	//ensaiadas já atende a quantidade especificada
 	public void checarQtdAmostras() {
 		System.out.println("tamanho da lista: "+ amostras.size());
 		System.out.println("qtd de amostras: "+ ensaioDetalhe.getQtdAmostras());

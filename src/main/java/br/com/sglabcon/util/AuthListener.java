@@ -20,6 +20,11 @@ public class AuthListener implements PhaseListener {
 		
 		boolean isPaginaPublica = paginaAtual.contains("autenticacao.xhtml");
 		
+		boolean isPaginaAdm = paginaAtual.contains("adm");
+		
+		System.out.println("É página adm: "+ isPaginaAdm);
+		
+		//critérios para avaliar se o usuário está autenticado na sessão
 		if(!isPaginaPublica) {
 			//pega o atributo da sessão "autenticacaoBean"
 			AutenticacaoBean autenticacaoBean = Faces.getSessionAttribute("autenticacaoBean");
@@ -36,6 +41,18 @@ public class AuthListener implements PhaseListener {
 			if(usuario == null) {
 				Faces.navigate("/pages/autenticacao.xhtml");
 				return;
+			}
+		}
+		
+		//critérios para avaliar se o usuário tem privilégios de administador
+		//para acessar páginas de administrador
+		if(isPaginaAdm) {
+			//pega o atributo da sessão "autenticacaoBean"
+			AutenticacaoBean autenticacaoBean = Faces.getSessionAttribute("autenticacaoBean");
+			
+			//se não for um administrador, deve ser redirecionado para a página principal
+			if(autenticacaoBean.getUsuarioLogado().getPapel() != 'A') {
+				Faces.navigate("/pages/principal.xhtml");
 			}
 		}
 	}
