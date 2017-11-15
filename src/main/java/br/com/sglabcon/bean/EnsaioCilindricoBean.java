@@ -192,15 +192,28 @@ public class EnsaioCilindricoBean extends GenericBean {
 	//De acordo com a norma 5739 da ABNT, deve se obter um fator de correção 
 	//através de interpolação linear e multiplica-lo pela força aplicada
 	public Double obterInterpolacao(Double x) {
-		//de acordo com a tabela, 2.00 está para 1 assim como 1.00 está para 0.87
-		//Ou seja:
-		//1 -> 0.87
-		//2.00 -> 1
-		//x -> ?
-		Double x1 = 1.0;
-		Double x2 = 2.00;
-		Double y1 = 0.87;
-		Double y2 = 1.0;
+		
+		Double x1;
+		Double x2;
+		Double y1;
+		Double y2;
+		
+		if(x <= 1.25) {
+			x1 = 1.0;
+			x2 = 1.25;
+			y1 = 0.87;
+			y2 = 0.93;
+		} else if(x <= 1.50) {
+			x1 = 1.25;
+			x2 = 1.50;
+			y1 = 0.93;
+			y2 = 0.96;
+		} else {
+			x1 = 1.5;
+			x2 = 2.0;
+			y1 = 0.96;
+			y2 = 1.0;
+		}
 		
 		Double resultado = y1+(y2-y1)*(x-x1)/(x2-x1);
 		
